@@ -61,9 +61,9 @@ namespace APIGateway
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
-
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 
