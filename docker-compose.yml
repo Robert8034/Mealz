@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: APIGateway/Dockerfile
+
+  authentication:
+    image: ${DOCKER_REGISTRY-}authentication
+    build:
+      context: .
+      dockerfile: Authentication/Dockerfile
+
+  userservice:
+    image: ${DOCKER_REGISTRY-}userservice
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
+
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: rabbit
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+    expose:
+        - 15672
+        - 5672

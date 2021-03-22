@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using UserService.Services;
 using Shared;
 
-namespace Authentication
+namespace UserService
 {
     public class Startup
     {
@@ -47,16 +46,15 @@ namespace Authentication
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
                     ValidateIssuer = false,
                     ValidateAudience = false
-                    
+
                 };
-            }
-            );
+            });
 
-            services.AddSharedServices("Authentication Service");
+            services.AddSharedServices("User Service");
 
-            services.AddMessagePublishing("Authentication Service");
+            services.AddMessagePublishing("User Service");
 
-            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
+            services.AddScoped<IUserService, Services.UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +71,7 @@ namespace Authentication
 
             app.UseAuthorization();
 
-            app.UseSharedAppParts("Authentication Service");
+            app.UseSharedAppParts("User Service");
 
             app.UseEndpoints(endpoints =>
             {

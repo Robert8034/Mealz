@@ -10,7 +10,7 @@ namespace Authentication
 {
     public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
-        private readonly IDictionary<string, string> users = new Dictionary<string, string>
+        private IDictionary<string, string> users = new Dictionary<string, string>
         {
             {
                 "test@test", "password"
@@ -46,6 +46,11 @@ namespace Authentication
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public void AddUser(string email, string password)
+        {
+            users.Add(email, password);
         }
     }
 }

@@ -9,14 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Authentication.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class NameController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IJwtAuthenticationManager jwtAuthenticationManager;
 
-        public NameController(IJwtAuthenticationManager jwtAuthenticationManager)
+        public AuthenticationController(IJwtAuthenticationManager jwtAuthenticationManager)
         {
             this.jwtAuthenticationManager = jwtAuthenticationManager;
         }
@@ -28,14 +27,6 @@ namespace Authentication.Controllers
             return new string[] { "New Jersey", "New York" };
         }
 
-        // GET api/<NameController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserCred userCred)
         {
