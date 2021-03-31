@@ -27,7 +27,7 @@ namespace Shared.Messaging
             var body = JsonSerializer.SerializeToUtf8Bytes(value);
 
             // Publish this without a routing key to the rabbitmq broker
-            channel.BasicPublish("Mealz", string.Empty, message, body);
+            channel.BasicPublish("mealz", string.Empty, message, body);
             return Task.CompletedTask;
         }
     }

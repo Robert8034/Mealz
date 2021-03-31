@@ -1,4 +1,5 @@
 ﻿using Authentication.Controllers;
+using Authentication.Services;
 using Shared.Messaging;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,15 @@ namespace Authentication.MessageHandlers
 {
     public class UserRegisteredMessageHandler : IMessageHandler<UserCred>
     {
-        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
-        public UserRegisteredMessageHandler(IJwtAuthenticationManager jwtAuthenticationManager)
+        private readonly IUserService _userService;
+        public UserRegisteredMessageHandler(IUserService userService)
         {
-            this.jwtAuthenticationManager = jwtAuthenticationManager;
+            _userService = userService;
         }
 
         public Task HandleMessageAsync(string messageType, UserCred message)
         {
-            jwtAuthenticationManager.AddUser(message.Email, message.Password);
+            _userService.AddUser(message.Email, message.Password);
 
             return Task.CompletedTask;
         }

@@ -16,7 +16,6 @@ namespace UserService.Services
 
         public void register(string email, string password)
         {
-            throw new NotImplementedException();
         }
     }
 }

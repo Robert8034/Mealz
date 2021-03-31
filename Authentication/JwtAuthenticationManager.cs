@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Authentication.DAL;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,9 +24,10 @@ namespace Authentication
 
         private readonly string key;
 
-        public JwtAuthenticationManager(string key)
+        public JwtAuthenticationManager()
         {
-            this.key = key;
+            this.key = "Thisismytestprivatekey";
+            ;
         }
 
         public string Authenticate(string username, string password)
@@ -46,11 +49,6 @@ namespace Authentication
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
-        }
-
-        public void AddUser(string email, string password)
-        {
-            users.Add(email, password);
         }
     }
 }

@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.DAL;
+using Authentication.MessageHandlers;
+using Authentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,16 +56,27 @@ namespace Authentication
             }
             );
 
+            var connection = @"Server=db;Database=master;User=sa;Password=Your_password123;";
+
+            services.AddDbContext<UserContext>(
+                 options => options.UseSqlServer(connection));
+
+            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
+
+            services.AddScoped<IUserService, UserService>();
+
             services.AddSharedServices("Authentication Service");
 
-            services.AddMessagePublishing("Authentication Service");
-
-            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
+            services.AddMessagePublishing("Authentication Service", builder => {
+                builder.WithHandler<UserRegisteredMessageHandler>("UserRegistered");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            UpdateDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +94,19 @@ namespace Authentication
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                        .GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<UserContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
