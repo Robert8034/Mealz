@@ -30,7 +30,7 @@ services:
         - 15672
         - 5672
 
-  db:
+  authdb:
     image: "mcr.microsoft.com/mssql/server"
     container_name: AuthDB
     environment:
@@ -42,3 +42,16 @@ services:
     expose:
         - 5673
         - 1433
+
+  userdb:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: UserDB
+    environment:
+        SA_PASSWORD: "Your_password123"
+        ACCEPT_EULA: "Y"
+    ports:
+        - "5674:5672"
+        - "1434:1433"
+    expose:
+        - 5674
+        - 1434

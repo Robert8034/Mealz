@@ -5,18 +5,11 @@ using System.Threading.Tasks;
 
 namespace UserService.Models
 {
-    public class UserModel
+    public class User
     {
+        public int UserId { get; set; }
         public string Email { get; set; }
-
-        public string EmailConfirm { get; set; }
-
-        public string Password { get; set; }
-
-        public string PasswordConfirm { get; set; }
-
         public string DisplayName { get; set; }
-
         public string Biography { get; set; }
     }
 }

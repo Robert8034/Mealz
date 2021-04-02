@@ -56,7 +56,7 @@ namespace Authentication
             }
             );
 
-            var connection = @"Server=db;Database=master;User=sa;Password=Your_password123;";
+            var connection = @"Server=authdb;Database=master;User=sa;Password=Your_password123;";
 
             services.AddDbContext<UserContext>(
                  options => options.UseSqlServer(connection));

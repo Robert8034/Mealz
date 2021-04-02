@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Services;
 using Shared;
+using UserService.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserService
 {
@@ -50,6 +52,11 @@ namespace UserService
                 };
             });
 
+            var connection = @"Server=userdb;Database=master;User=sa;Password=Your_password123;";
+
+            services.AddDbContext<UserContext>(
+                 options => options.UseSqlServer(connection));
+
             services.AddSharedServices("User Service");
 
             services.AddMessagePublishing("User Service");
@@ -60,6 +67,8 @@ namespace UserService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            UpdateDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,6 +86,18 @@ namespace UserService
             {
                 endpoints.MapControllers();
             });
+        }
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                        .GetRequiredService<IServiceScopeFactory>()
+                        .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<UserContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

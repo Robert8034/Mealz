@@ -28,8 +28,8 @@ namespace UserService.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserModel userModel)
         {
-            if (userService.checkCredentials(userModel.Email, userModel.EmailConfirm, userModel.Password, userModel.PasswordConfirm)) {
-                userService.register(userModel.Email, userModel.Password);
+            if (userService.CheckCredentials(userModel.Email, userModel.EmailConfirm, userModel.Password, userModel.PasswordConfirm)) {
+                userService.Register(userModel.Email, userModel.Password, userModel.DisplayName, userModel.Biography);
 
                 await messagePublisher.PublishMessageAsync("UserRegistered", new { Email = userModel.Email, Password = userModel.Password });
                 
