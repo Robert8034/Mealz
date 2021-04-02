@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Authentication.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,11 @@ namespace Authentication.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        private readonly IUserService _userService;
 
-        public AuthenticationController(IJwtAuthenticationManager jwtAuthenticationManager)
+        public AuthenticationController(IUserService userService)
         {
-            this.jwtAuthenticationManager = jwtAuthenticationManager;
+            _userService = userService;
         }
 
         // GET: api/<NameController>
@@ -30,7 +31,8 @@ namespace Authentication.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserCred userCred)
         {
-            var token = jwtAuthenticationManager.Authenticate(userCred.Email, userCred.Password);
+            var token = _userService.Authenticate(userCred.Email, userCred.Password);
+
             if (token == null) return Unauthorized();
 
             return Ok(token);

@@ -63,6 +63,8 @@ namespace Authentication
 
             services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
 
+            services.AddSingleton<ICryptographyService, CrypthographyService>();
+
             services.AddScoped<IUserService, UserService>();
 
             services.AddSharedServices("Authentication Service");

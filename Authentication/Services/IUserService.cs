@@ -8,5 +8,6 @@ namespace Authentication.Services
     public interface IUserService
     {
         void AddUser(string email, string password);
+        string Authenticate(string email, string password);
     }
 }

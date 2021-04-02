@@ -12,37 +12,23 @@ namespace Authentication
 {
     public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
-        private IDictionary<string, string> users = new Dictionary<string, string>
-        {
-            {
-                "test@test", "password"
-            },
-            {
-                "test@2", "password2"
-            }
-        };
-
+   
         private readonly string key;
 
         public JwtAuthenticationManager()
         {
             this.key = "Thisismytestprivatekey";
-            ;
+            
         }
 
-        public string Authenticate(string username, string password)
+        public string WriteToken(string email)
         {
-            if (!users.Any(u => u.Key == username && u.Value == password))
-            {
-                return null;
-            }
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
