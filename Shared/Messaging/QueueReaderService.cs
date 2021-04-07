@@ -21,13 +21,15 @@ namespace Shared.Messaging
         private readonly MessageHandlerRepository _messageHandlerRepository;
         private readonly ILogger<QueueReaderService> _logger;
         private IModel _channel;
+        private readonly RabbitMqConfiguration _configuration;
 
         public QueueReaderService(
             IServiceProvider serviceProvider,
             RabbitMqConnection connection,
             QueueName queueName,
             MessageHandlerRepository messageHandlerRepository,
-            ILogger<QueueReaderService> logger
+            ILogger<QueueReaderService> logger,
+            RabbitMqConfiguration configuration
         )
         {
             _serviceProvider = serviceProvider;
@@ -35,10 +37,13 @@ namespace Shared.Messaging
             _queueName = queueName;
             _messageHandlerRepository = messageHandlerRepository;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _configuration.ConfigureRabbit();
+
             // Create a channel for this reader
             _channel = _connection.CreateChannel();
 
@@ -62,6 +67,7 @@ namespace Shared.Messaging
 
             // On the provided queue name, register our consumer as a consumer.
             _channel.BasicConsume(_queueName.Name, false, consumer);
+
             return Task.CompletedTask;
         }
 
