@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: APIGateway/Dockerfile
+    ports:
+        - "50000:80"
+        - "50001:443"
 
   authentication:
     image: ${DOCKER_REGISTRY-}authentication
@@ -40,7 +43,6 @@ services:
         - "5673:5672"
         - "1433:1433"
     expose:
-        - 5673
         - 1433
 
   userdb:
@@ -52,6 +54,3 @@ services:
     ports:
         - "5674:5672"
         - "1434:1433"
-    expose:
-        - 5674
-        - 1434

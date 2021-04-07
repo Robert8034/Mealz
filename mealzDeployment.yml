@@ -1,0 +1,320 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: apigateway
+    name: apigateway
+  spec:
+    ports:
+    - name: "50000"
+      port: 50000
+      targetPort: 80
+    - name: "50001"
+      port: 50001
+      targetPort: 443
+    selector:
+      io.kompose.service: apigateway
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authdb
+    name: authdb
+  spec:
+    ports:
+    - name: "5673"
+      port: 5673
+      targetPort: 5672
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
+    selector:
+      io.kompose.service: authdb
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rabbit
+    name: rabbit
+  spec:
+    ports:
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+    - name: "5672"
+      port: 5672
+      targetPort: 5672
+    selector:
+      io.kompose.service: rabbit
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userdb
+    name: userdb
+  spec:
+    ports:
+    - name: "5674"
+      port: 5674
+      targetPort: 5672
+    - name: "1434"
+      port: 1434
+      targetPort: 1433
+    selector:
+      io.kompose.service: userdb
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: apigateway
+    name: apigateway
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: apigateway
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: apigateway
+      spec:
+        containers:
+        - image: apigateway
+          imagePullPolicy: ""
+          name: apigateway
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authdb
+    name: authdb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: authdb
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: authdb
+      spec:
+        containers:
+        - env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: Your_password123
+          image: mcr.microsoft.com/mssql/server
+          imagePullPolicy: ""
+          name: authdb
+          ports:
+          - containerPort: 5672
+          - containerPort: 1433
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authentication
+    name: authentication
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: authentication
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: authentication
+      spec:
+        containers:
+        - image: authentication
+          imagePullPolicy: ""
+          name: authentication
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: rabbit
+    name: rabbit
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: rabbit
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: rabbit
+      spec:
+        containers:
+        - image: rabbitmq:3-management
+          imagePullPolicy: ""
+          name: rabbitmq
+          ports:
+          - containerPort: 15672
+          - containerPort: 5672
+          resources: {}
+        hostname: rabbit
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userdb
+    name: userdb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: userdb
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: userdb
+      spec:
+        containers:
+        - env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: Your_password123
+          image: mcr.microsoft.com/mssql/server
+          imagePullPolicy: ""
+          name: userdb
+          ports:
+          - containerPort: 5672
+          - containerPort: 1433
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userservice
+    name: userservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: userservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: userservice
+      spec:
+        containers:
+        - image: userservice
+          imagePullPolicy: ""
+          name: userservice
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+kind: List
+metadata: {}
+
