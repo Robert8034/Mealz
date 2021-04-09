@@ -114,7 +114,7 @@ items:
           io.kompose.service: apigateway
       spec:
         containers:
-        - image: apigateway
+        - image: robert8034/apigateway:dev
           imagePullPolicy: ""
           name: apigateway
           ports:
@@ -193,7 +193,7 @@ items:
           io.kompose.service: authentication
       spec:
         containers:
-        - image: authentication
+        - image: robert8034/authentication:dev
           imagePullPolicy: ""
           name: authentication
           resources: {}
@@ -307,7 +307,7 @@ items:
           io.kompose.service: userservice
       spec:
         containers:
-        - image: userservice
+        - image: robert8034/userservice:dev
           imagePullPolicy: ""
           name: userservice
           resources: {}

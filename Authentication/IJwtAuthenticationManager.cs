@@ -2,7 +2,7 @@
 {
     public interface IJwtAuthenticationManager
     {
-        string WriteToken(string email);
-
+        string WriteToken(int id);
+        int ReadToken(string token);
     }
 }

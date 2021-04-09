@@ -16,9 +16,12 @@ namespace Authentication.Controllers
     {
         private readonly IUserService _userService;
 
-        public AuthenticationController(IUserService userService)
+        private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
+
+        public AuthenticationController(IUserService userService, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _userService = userService;
+            _jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
         // GET: api/<NameController>
@@ -36,6 +39,16 @@ namespace Authentication.Controllers
             if (token == null) return Unauthorized();
 
             return Ok(token);
+        }
+
+        [HttpPost("readToken")]
+        public IActionResult ReadToken()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+
+            var id = _jwtAuthenticationManager.ReadToken(token);
+
+            return Ok(id);
         }
     }
 }

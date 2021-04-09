@@ -41,7 +41,8 @@ namespace Authentication.Services
 
             if (user != null && user.Password == _cryptographyService.HashInput(password, user.Salt))
             {
-                return _jwtAuthenticationManager.WriteToken(email);
+                int id = _userContext.Users.FirstOrDefault(e => e.Email == email).UserId;
+                return _jwtAuthenticationManager.WriteToken(id);
             }
 
             return null;

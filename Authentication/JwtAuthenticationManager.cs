@@ -18,23 +18,32 @@ namespace Authentication
         public JwtAuthenticationManager()
         {
             this.key = "Thisismytestprivatekey";
-            
         }
 
-        public string WriteToken(string email)
+        public string WriteToken(int id)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, email)
+                    new Claim(ClaimTypes.Name, id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public int ReadToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+            var claim = securityToken.Claims.First().Value;
+
+            return Convert.ToInt32(claim);
         }
     }
 }

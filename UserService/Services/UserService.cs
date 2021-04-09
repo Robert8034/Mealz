@@ -36,5 +36,10 @@ namespace UserService.Services
             _userContext.Add(user);
             _userContext.SaveChanges();
         }
+
+        public User GetUser(int userId)
+        {
+            return _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+        }
     }
 }

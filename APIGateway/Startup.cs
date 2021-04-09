@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Kubernetes;
 
 namespace APIGateway
 {
@@ -50,7 +51,7 @@ namespace APIGateway
             });
 
 
-            services.AddOcelot();
+            services.AddOcelot().AddKubernetes();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

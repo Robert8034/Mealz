@@ -38,5 +38,17 @@ namespace UserService.Controllers
 
             return BadRequest();
         }
+
+        [HttpPost("getUser")]
+        public async Task<IActionResult> GetUser([FromBody] int userId)
+        {
+            if (userId == 0) return BadRequest("User ID is invalid");
+
+            var user = userService.GetUser(userId);
+
+            if (user == null) return BadRequest("User could not be found");
+
+            return Ok(user);
+        }
     }
 }

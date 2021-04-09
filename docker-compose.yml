@@ -2,7 +2,8 @@ version: '3.4'
 
 services:
   apigateway:
-    image: ${DOCKER_REGISTRY-}apigateway
+    image: robert8034/apigateway:dev
+    tty: true
     build:
       context: .
       dockerfile: APIGateway/Dockerfile
@@ -11,17 +12,19 @@ services:
         - "50001:443"
 
   authentication:
-    image: ${DOCKER_REGISTRY-}authentication
+    image: robert8034/authentication:dev
+    tty: true
     build:
       context: .
       dockerfile: Authentication/Dockerfile
-
+    
   userservice:
-    image: ${DOCKER_REGISTRY-}userservice
+    image: robert8034/userservice:dev
+    tty: true
     build:
       context: .
       dockerfile: UserService/Dockerfile
-
+   
   rabbit:
     image: rabbitmq:3-management
     hostname: rabbit
