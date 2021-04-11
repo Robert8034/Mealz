@@ -18,7 +18,7 @@ namespace Authentication.MessageHandlers
 
         public Task HandleMessageAsync(string messageType, UserCred message)
         {
-            _userService.AddUser(message.Email, message.Password);
+            _userService.AddUser(message.UserId, message.Email, message.Password);
 
             return Task.CompletedTask;
         }

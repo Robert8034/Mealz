@@ -7,7 +7,7 @@ namespace Authentication.Services
 {
     public interface IUserService
     {
-        void AddUser(string email, string password);
+        void AddUser(Guid userId, string email, string password);
         string Authenticate(string email, string password);
     }
 }

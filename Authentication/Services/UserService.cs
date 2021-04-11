@@ -23,7 +23,7 @@ namespace Authentication.Services
             _jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
-        public void AddUser(string email, string password)
+        public void AddUser(Guid userId, string email, string password)
         {
             var salt = _cryptographyService.GenerateSalt();
 
@@ -31,7 +31,7 @@ namespace Authentication.Services
 
             var stringSalt = Convert.ToBase64String(salt);
 
-            _userContext.Users.Add(new Models.User { Email = email, Password = hashedPassword, Salt = stringSalt });
+            _userContext.Users.Add(new Models.User { UserId = userId, Email = email, Password = hashedPassword, Salt = stringSalt });
             _userContext.SaveChanges();
         }
 
@@ -41,7 +41,7 @@ namespace Authentication.Services
 
             if (user != null && user.Password == _cryptographyService.HashInput(password, user.Salt))
             {
-                int id = _userContext.Users.FirstOrDefault(e => e.Email == email).UserId;
+                Guid id = _userContext.Users.FirstOrDefault(e => e.Email == email).UserId;
                 return _jwtAuthenticationManager.WriteToken(id);
             }
 

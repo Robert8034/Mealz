@@ -10,8 +10,10 @@ namespace UserService.Services
     {
         bool CheckCredentials(string email, string emailConfirm, string password, string passwordConfirm);
 
-        void Register(string email, string password, string displayName, string biography);
+        void Register(Guid userId, string email, string password, string displayName, string biography);
 
-        User GetUser(int userId);
+        User GetUser(Guid userId);
+
+        Task<bool> UpdateUser(User user);
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Authentication
+﻿using System;
+
+namespace Authentication
 {
     public interface IJwtAuthenticationManager
     {
-        string WriteToken(int id);
-        int ReadToken(string token);
+        string WriteToken(Guid id);
+        Guid ReadToken(string token);
     }
 }

@@ -20,7 +20,7 @@ namespace Authentication
             this.key = "Thisismytestprivatekey";
         }
 
-        public string WriteToken(int id)
+        public string WriteToken(Guid id)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
@@ -36,14 +36,14 @@ namespace Authentication
             return tokenHandler.WriteToken(token);
         }
 
-        public int ReadToken(string token)
+        public Guid ReadToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
 
             var claim = securityToken.Claims.First().Value;
 
-            return Convert.ToInt32(claim);
+            return Guid.Parse(claim);
         }
     }
 }
