@@ -45,7 +45,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> GetUser([FromBody] Guid userId)
         {
 
-            if (userId == null) return BadRequest("User ID is invalid");
+            if (userId == Guid.Empty) return BadRequest("User ID is invalid");
 
             var user = _userService.GetUser(userId);
 
