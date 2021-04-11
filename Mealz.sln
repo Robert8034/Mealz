@@ -9,9 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Authentic
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1109C0DC-BBFC-4DEC-AF98-E1613A319888}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{1015F6A6-96B0-4DB3-A7D0-9577C8A43C2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\UserService.csproj", "{1015F6A6-96B0-4DB3-A7D0-9577C8A43C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{24613AA5-7325-42D9-9600-2475EA831AC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{24613AA5-7325-42D9-9600-2475EA831AC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeService", "RecipeService\RecipeService.csproj", "{A8F27C9D-1BB8-49E7-A171-1479723E753F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{24613AA5-7325-42D9-9600-2475EA831AC0} = {24613AA5-7325-42D9-9600-2475EA831AC0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{24613AA5-7325-42D9-9600-2475EA831AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24613AA5-7325-42D9-9600-2475EA831AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24613AA5-7325-42D9-9600-2475EA831AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8F27C9D-1BB8-49E7-A171-1479723E753F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8F27C9D-1BB8-49E7-A171-1479723E753F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8F27C9D-1BB8-49E7-A171-1479723E753F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8F27C9D-1BB8-49E7-A171-1479723E753F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

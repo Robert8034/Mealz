@@ -25,6 +25,13 @@ services:
       context: .
       dockerfile: UserService/Dockerfile
    
+  recipeservice:
+    image: robert8034/recipeservice:dev
+    tty: true
+    build:
+      context: .
+      dockerfile: RecipeService/Dockerfile
+
   rabbit:
     image: rabbitmq:3-management
     hostname: rabbit
@@ -57,3 +64,14 @@ services:
     ports:
         - "5674:5672"
         - "1434:1433"
+
+  recipedb:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: RecipeDB
+    environment:
+        SA_PASSWORD: "Your_password123"
+        ACCEPT_EULA: "Y"
+    ports:
+        - "5675:5672"
+        - "1435:1433"
+  
