@@ -4,6 +4,7 @@ services:
   apigateway:
     image: robert8034/apigateway:dev
     tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: APIGateway/Dockerfile
@@ -14,6 +15,7 @@ services:
   authentication:
     image: robert8034/authentication:dev
     tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: Authentication/Dockerfile
@@ -21,6 +23,7 @@ services:
   userservice:
     image: robert8034/userservice:dev
     tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: UserService/Dockerfile
@@ -28,6 +31,7 @@ services:
   recipeservice:
     image: robert8034/recipeservice:dev
     tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: RecipeService/Dockerfile

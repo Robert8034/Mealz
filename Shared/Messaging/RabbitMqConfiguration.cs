@@ -28,6 +28,7 @@ namespace Shared.Messaging
                 channel.QueueDeclare("Recipe Service", false, false);
 
                 channel.QueueBind("Authentication Service", "mealz", "UserRegistered");
+                channel.QueueBind("Authentication Service", "mealz", "UserChanged");
 
                 configured = true;
             }

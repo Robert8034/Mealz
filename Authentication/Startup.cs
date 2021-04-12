@@ -71,6 +71,7 @@ namespace Authentication
 
             services.AddMessagePublishing("Authentication Service", builder => {
                 builder.WithHandler<UserRegisteredMessageHandler>("UserRegistered");
+                builder.WithHandler<UserChangedMessageHandler>("UserChanged");
             });
         }
 

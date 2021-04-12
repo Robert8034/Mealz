@@ -9,5 +9,6 @@ namespace Authentication.Services
     {
         void AddUser(Guid userId, string email, string password);
         string Authenticate(string email, string password);
+        void ChangeUser(Guid userId, string email);
     }
 }

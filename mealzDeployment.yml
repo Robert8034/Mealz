@@ -74,6 +74,28 @@ items:
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
+      io.kompose.service: recipedb
+    name: recipedb
+  spec:
+    ports:
+    - name: "5675"
+      port: 5675
+      targetPort: 5672
+    - name: "1435"
+      port: 1435
+      targetPort: 1433
+    selector:
+      io.kompose.service: recipedb
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
       io.kompose.service: userdb
     name: userdb
   spec:
@@ -121,6 +143,8 @@ items:
           - containerPort: 80
           - containerPort: 443
           resources: {}
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
@@ -197,6 +221,8 @@ items:
           imagePullPolicy: ""
           name: authentication
           resources: {}
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
@@ -235,6 +261,84 @@ items:
           - containerPort: 5672
           resources: {}
         hostname: rabbit
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: recipedb
+    name: recipedb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: recipedb
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: recipedb
+      spec:
+        containers:
+        - env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: Your_password123
+          image: mcr.microsoft.com/mssql/server
+          imagePullPolicy: ""
+          name: recipedb
+          ports:
+          - containerPort: 5672
+          - containerPort: 1433
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: recipeservice
+    name: recipeservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: recipeservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: recipeservice
+      spec:
+        containers:
+        - image: robert8034/recipeservice:dev
+          imagePullPolicy: ""
+          name: recipeservice
+          resources: {}
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null
@@ -311,6 +415,8 @@ items:
           imagePullPolicy: ""
           name: userservice
           resources: {}
+          stdin: true
+          tty: true
         restartPolicy: Always
         serviceAccountName: ""
         volumes: null

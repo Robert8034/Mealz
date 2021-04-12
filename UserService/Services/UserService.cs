@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +11,12 @@ namespace UserService.Services
     public class UserService : IUserService
     {
         private readonly UserContext _userContext;
-        public UserService(UserContext userContext)
+        private readonly IMessagePublisher _messagePublisher;
+
+        public UserService(UserContext userContext, IMessagePublisher messagePublisher)
         {
             _userContext = userContext;
+            _messagePublisher = messagePublisher;
         }
         public bool CheckCredentials(string email, string emailConfirm, string password, string passwordConfirm)
         {
@@ -45,14 +49,20 @@ namespace UserService.Services
 
         public async Task<bool> UpdateUser(User user)
         {
-            if (_userContext.Users.FirstOrDefault(e => e.UserId == user.UserId) != null)
+            var originalUser = _userContext.Users.FirstOrDefault(e => e.UserId == user.UserId);
+
+            if (originalUser != null)
             {
                 if (!CheckIfEmailIsInUse(user.Email, user.UserId))
                 {
-                    var originalUser = _userContext.Users.First(e => e.UserId == user.UserId);
                     originalUser.Biography = user.Biography;
                     originalUser.DisplayName = user.DisplayName;
-                    originalUser.Email = user.Email;
+
+                    if (originalUser.Email != user.Email)
+                    {
+                        originalUser.Email = user.Email;
+                        await _messagePublisher.PublishMessageAsync("UserChanged", new { UserId = user.UserId, Email = user.Email, Password = "" });
+                    }
 
                     await _userContext.SaveChangesAsync();
 

@@ -42,7 +42,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("getUser")]
-        public async Task<IActionResult> GetUser([FromBody] Guid userId)
+        public IActionResult GetUser([FromBody] Guid userId)
         {
 
             if (userId == Guid.Empty) return BadRequest("User ID is invalid");
@@ -58,7 +58,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {
             if (await _userService.UpdateUser(user)) return Ok();
-
+            
             return BadRequest("User could not be updated");
         }
     }

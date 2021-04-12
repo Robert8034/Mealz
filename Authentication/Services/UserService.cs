@@ -47,5 +47,16 @@ namespace Authentication.Services
 
             return null;
         }
+
+        public void ChangeUser(Guid userId, string email)
+        {
+            var user = _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+
+            if (user != null)
+            {
+                user.Email = email;
+                _userContext.SaveChanges();
+            }
+        }
     }
 }
