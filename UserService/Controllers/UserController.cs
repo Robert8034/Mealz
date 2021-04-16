@@ -33,7 +33,7 @@ namespace UserService.Controllers
 
                 _userService.Register(userId, userModel.Email, userModel.Password, userModel.DisplayName, userModel.Biography);
 
-                await _messagePublisher.PublishMessageAsync("UserRegistered", new { UserId = userId, Email = userModel.Email, Password = userModel.Password });
+                await _messagePublisher.PublishMessageAsync("UserRegistered", new { UserId = userId, userModel.Email, userModel.Password });
                 
                 return Ok();
             }

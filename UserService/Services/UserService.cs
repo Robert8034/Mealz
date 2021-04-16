@@ -61,7 +61,7 @@ namespace UserService.Services
                     if (originalUser.Email != user.Email)
                     {
                         originalUser.Email = user.Email;
-                        await _messagePublisher.PublishMessageAsync("UserChanged", new { UserId = user.UserId, Email = user.Email, Password = "" });
+                        await _messagePublisher.PublishMessageAsync("UserChanged", new { user.UserId, user.Email, Password = "" });
                     }
 
                     await _userContext.SaveChangesAsync();

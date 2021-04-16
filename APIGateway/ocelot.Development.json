@@ -93,7 +93,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "userservice",
+          "Host": "recipeservice",
           "Port": 80
         }
       ],
@@ -109,7 +109,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "userservice",
+          "Host": "recipeservice",
           "Port": 80
         }
       ],

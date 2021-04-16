@@ -35,6 +35,10 @@ services:
     build:
       context: .
       dockerfile: RecipeService/Dockerfile
+    environment:
+        MongoDB__Host: mongo
+    depends_on:
+        - mongo
 
   rabbit:
     image: rabbitmq:3-management
@@ -69,13 +73,20 @@ services:
         - "5674:5672"
         - "1434:1433"
 
-  recipedb:
-    image: "mcr.microsoft.com/mssql/server"
-    container_name: RecipeDB
+  mongo:
+    image: mongo
+    restart: always
     environment:
-        SA_PASSWORD: "Your_password123"
-        ACCEPT_EULA: "Y"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-        - "5675:5672"
-        - "1435:1433"
-  
+    - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
