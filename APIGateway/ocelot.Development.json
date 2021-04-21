@@ -119,6 +119,18 @@
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/recipe/getRecipes",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recipeservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/getRecipes",
+      "UpstreamHttpMethod": [ "Post" ]
     }
 
   ],
