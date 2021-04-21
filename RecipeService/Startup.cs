@@ -58,6 +58,8 @@ namespace RecipeService
                 };
             });
 
+            services.AddAuthorization();
+
             var config = new ServerConfig();
             Configuration.Bind(config);
 

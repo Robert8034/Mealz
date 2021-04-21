@@ -52,6 +52,8 @@ namespace UserService
                 };
             });
 
+            services.AddAuthorization();
+
             var connection = @"Server=userdb;Database=master;User=sa;Password=Your_password123;";
 
             services.AddDbContext<UserContext>(

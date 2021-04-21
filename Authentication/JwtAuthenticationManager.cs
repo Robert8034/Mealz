@@ -1,4 +1,5 @@
 ﻿using Authentication.DAL;
+using Authentication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -20,14 +21,15 @@ namespace Authentication
             this.key = "Thisismytestprivatekey";
         }
 
-        public string WriteToken(Guid id)
+        public string WriteToken(Guid id, Roles role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, id.ToString())
+                    new Claim(ClaimTypes.Name, id.ToString()),
+                    new Claim(ClaimTypes.Role, role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

@@ -50,5 +50,46 @@ namespace Authentication.Controllers
 
             return Ok(id);
         }
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpPost("upgradeToChef")]
+        public IActionResult UpgradeToChef([FromBody] Guid targetUserId)
+        {
+            if (targetUserId == Guid.Empty) return BadRequest("User is not valid");
+
+            var targetUser = _userService.GetUser(targetUserId);
+
+            if (targetUser != null)
+            {
+                if (targetUser.Role == Models.Roles.Chef) return BadRequest("You can't promote someone that is already a chef");
+
+                if (targetUser.Role == Models.Roles.Moderator || targetUser.Role == Models.Roles.Admin) return BadRequest("You can't promote someone to chef that is already a moderator or admin");
+
+                _userService.ChangeUserRole(targetUser, Models.Roles.Chef);
+
+            }
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("upgradeToModerator")]
+        public IActionResult UpgradeToModerator([FromBody] Guid targetUserId)
+        {
+            if (targetUserId == Guid.Empty) return BadRequest("User is not valid");
+
+            var targetUser = _userService.GetUser(targetUserId);
+
+            if (targetUser != null)
+            {
+
+                if (targetUser.Role == Models.Roles.Moderator || targetUser.Role == Models.Roles.Admin) return BadRequest("You can't promote someone to moderator that is already a moderator or admin");
+
+                _userService.ChangeUserRole(targetUser, Models.Roles.Moderator);
+
+            }
+
+            return Ok();
+        }
     }
 }

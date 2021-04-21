@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Authentication.Models;
+using System;
 
 namespace Authentication
 {
     public interface IJwtAuthenticationManager
     {
-        string WriteToken(Guid id);
+        string WriteToken(Guid id, Roles role);
         Guid ReadToken(string token);
     }
 }

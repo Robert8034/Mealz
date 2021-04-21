@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecipeService.Models;
@@ -20,12 +21,25 @@ namespace RecipeService.Controllers
             _recipeService = recipeService;
         }
 
+        [Authorize(Roles = "Chef,Moderator,Admin")]
         [HttpPost("postRecipe")]
         public async Task<IActionResult> PostRecipe([FromBody] Recipe recipe)
         {
-            await _recipeService.PostRecipe(recipe);
+            if (recipe.UserId != Guid.Empty)
+            {
+                await _recipeService.PostRecipe(recipe);
+                return Ok();
+            }
 
-            return Ok();
+            return BadRequest();
+        }
+
+        [HttpPost("getRecipes")]
+        public IActionResult GetRecipes([FromBody] int index)
+        {
+            var recipes = _recipeService.GetRecipes(index);
+
+            return Ok(recipes);
         }
     }
 }

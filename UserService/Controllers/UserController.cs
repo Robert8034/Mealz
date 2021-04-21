@@ -41,6 +41,7 @@ namespace UserService.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles = "User,Chef,Moderator,Admin")]
         [HttpPost("getUser")]
         public IActionResult GetUser([FromBody] Guid userId)
         {
@@ -54,6 +55,7 @@ namespace UserService.Controllers
             return Ok(user);
         }
 
+        [Authorize(Roles = "User,Chef,Moderator,Admin")]
         [HttpPost("updateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {

@@ -1,4 +1,5 @@
 ﻿using Authentication.DAL;
+using Authentication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Authentication.Services
 
             var stringSalt = Convert.ToBase64String(salt);
 
-            _userContext.Users.Add(new Models.User { UserId = userId, Email = email, Password = hashedPassword, Salt = stringSalt });
+            _userContext.Users.Add(new Models.User { UserId = userId, Email = email, Password = hashedPassword, Salt = stringSalt, Role = Models.Roles.User });
             _userContext.SaveChanges();
         }
 
@@ -41,8 +42,8 @@ namespace Authentication.Services
 
             if (user != null && user.Password == _cryptographyService.HashInput(password, user.Salt))
             {
-                Guid id = _userContext.Users.FirstOrDefault(e => e.Email == email).UserId;
-                return _jwtAuthenticationManager.WriteToken(id);
+                var result = _userContext.Users.FirstOrDefault(e => e.Email == email);
+                return _jwtAuthenticationManager.WriteToken(result.UserId, result.Role);
             }
 
             return null;
@@ -57,6 +58,18 @@ namespace Authentication.Services
                 user.Email = email;
                 _userContext.SaveChanges();
             }
+        }
+
+        public void ChangeUserRole(User user, Roles role)
+        {
+            user.Role = role;
+
+            _userContext.SaveChanges();
+        }
+
+        public User GetUser(Guid userId)
+        {
+            return _userContext.Users.FirstOrDefault(e => e.UserId == userId);
         }
     }
 }

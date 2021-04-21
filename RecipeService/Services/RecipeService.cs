@@ -18,7 +18,13 @@ namespace RecipeService.Services
 
         public async Task PostRecipe(Recipe recipe)
         {
+            recipe.RecipeId = Guid.NewGuid();
             await _recipeRepository.Save(recipe);
+        }
+
+        public List<Recipe> GetRecipes(int index)
+        {
+            return _recipeRepository.GetRange(index, 10);
         }
     }
 }

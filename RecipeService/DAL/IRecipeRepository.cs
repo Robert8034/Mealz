@@ -9,5 +9,7 @@ namespace RecipeService.DAL
     public interface IRecipeRepository
     {
         Task Save(Recipe recipe);
+
+        List<Recipe> GetRange(int lowerIndex, int count);
     }
 }

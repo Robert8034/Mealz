@@ -16,6 +16,5 @@ namespace RecipeService.Models
         public Guid UserId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public int Likes { get; set; }
     }
 }

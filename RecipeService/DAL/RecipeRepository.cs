@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver;
 
 namespace RecipeService.DAL
 {
@@ -18,6 +20,22 @@ namespace RecipeService.DAL
         public async Task Save(Recipe recipe)
         {
             await _context.Recipes.InsertOneAsync(recipe);
+        }
+
+        public List<Recipe> GetRange(int lowerIndex, int count)
+        {
+            var recipes = _context.Recipes.AsQueryable().ToList();
+
+            var recipeCount = recipes.Count();
+
+            if (recipeCount == 0 || lowerIndex > recipeCount) return new List<Recipe>();
+
+            if (recipeCount < (lowerIndex + count))
+            {
+                count = recipeCount - lowerIndex;
+            }
+
+            return recipes.GetRange(lowerIndex, count);
         }
     }
 }
