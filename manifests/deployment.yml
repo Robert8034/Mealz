@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: robertmealz 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: robertmealz
+  template:
+    metadata:
+      labels:
+        app: robertmealz 
+    spec:
+      containers:
+        - name: robertmealz 
+          image: mealzcontainerregistry.azurecr.io/robertmealz
+          ports:
+          - containerPort: 80
