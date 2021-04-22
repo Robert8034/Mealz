@@ -35,4 +35,4 @@ steps:
     kubernetesCluster: $(kubernetesCluster)
     command: apply
     useConfigurationFile: true
-    configuration: '**/mealzDeployment.yml'
+    configuration: 'mealzDeployment.yml'
