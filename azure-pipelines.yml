@@ -1,0 +1,38 @@
+# Deploy to Azure Kubernetes Service
+# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '7355d863-df2d-4022-a2ec-3ac00fee0c18'
+  imageRepository: 'robertmealz'
+  containerRegistry: 'mealzcontainerregistry.azurecr.io'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  imagePullSecret: 'mealzcontainerregistryfd4f-auth'
+  azureSubscriptionEndpoint: 'Azure for Students(23f4b68b-d9db-4cd7-ad04-8d84881a8c95)'
+  azureResourceGroup: 'Mealz'
+  kubernetesCluster: 'MealzCluster'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+
+steps:
+- task: Kubernetes@1
+  displayName: kubectl apply using configFile
+  inputs:
+    connectionType: Azure Resource Manager
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    command: apply
+    useConfigurationFile: true
+    configuration: 'mealzDeployment.yml'
