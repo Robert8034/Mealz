@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>Mealz_Shared_Project</PackageId>
+    <Authors>Robert Dams</Authors>
+    <Product>Mealz</Product>
+    <Description>Shared project used in the Mealz solution. Configures RabbitMQ and adds logging and swagger to the application.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

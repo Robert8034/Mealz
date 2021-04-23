@@ -11,6 +11,7 @@ items:
       io.kompose.service: apigateway
     name: apigateway
   spec:
+    type: LoadBalancer
     ports:
     - name: "50000"
       port: 50000
@@ -18,8 +19,6 @@ items:
     - name: "50001"
       port: 50001
       targetPort: 443
-    externalIPs:
-     - 192.168.0.194
     selector:
       io.kompose.service: apigateway
   status:
@@ -160,6 +159,9 @@ items:
           ports:
           - containerPort: 80
           - containerPort: 443
+          env:
+            - name: "ASPNETCORE_ENVIRONMENT"
+              value: "Development"
           resources: {}
           stdin: true
           tty: true

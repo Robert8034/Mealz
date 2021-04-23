@@ -13,10 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{24613AA5-7325-42D9-9600-2475EA831AC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeService", "RecipeService\RecipeService.csproj", "{A8F27C9D-1BB8-49E7-A171-1479723E753F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{24613AA5-7325-42D9-9600-2475EA831AC0} = {24613AA5-7325-42D9-9600-2475EA831AC0}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeService", "RecipeService\RecipeService.csproj", "{A8F27C9D-1BB8-49E7-A171-1479723E753F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
