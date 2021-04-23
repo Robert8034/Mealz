@@ -13,16 +13,17 @@ items:
   spec:
     type: LoadBalancer
     ports:
-    - name: "50000"
+    - name: "http"
       port: 50000
       targetPort: 80
-    - name: "50001"
+      nodePort: 30000
+    - name: "https"
       port: 50001
       targetPort: 443
+      nodePort: 30001
     selector:
-      io.kompose.service: apigateway
-  status:
-    loadBalancer: {}
+      app: apigateway
+
 - apiVersion: v1
   kind: Service
   metadata:
@@ -127,6 +128,7 @@ items:
       io.kompose.service: userdb
   status:
     loadBalancer: {}
+
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
