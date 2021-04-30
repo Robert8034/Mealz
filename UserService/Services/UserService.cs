@@ -83,5 +83,19 @@ namespace UserService.Services
 
             return true;
         }
+
+        public async Task<bool> DeleteUser(User user)
+        {
+            _userContext.Remove(user);
+
+            await _userContext.SaveChangesAsync();
+
+            if (_userContext.Users.FirstOrDefault(e => e.UserId == user.UserId) == null)
+            {
+                await _messagePublisher.PublishMessageAsync("UserDeleted", new { user.UserId });
+                return true;
+            }
+            return false;
+        }
     }
 }

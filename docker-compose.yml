@@ -2,15 +2,15 @@ version: '3.4'
 
 services:
   apigateway:
-    image: robert8034/apigateway:dev
+    image: robert8034/apigateway:dev-v1
     tty: true
     stdin_open: true
     build:
       context: .
       dockerfile: APIGateway/Dockerfile
     ports:
-        - "50000:80"
-        - "50001:443"
+        - "50002:80"
+        - "50003:443"
 
   authentication:
     image: robert8034/authentication:dev
@@ -90,3 +90,9 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  moderationservice:
+    image: ${DOCKER_REGISTRY-}moderationservice
+    build:
+      context: .
+      dockerfile: ModerationService/Dockerfile
+

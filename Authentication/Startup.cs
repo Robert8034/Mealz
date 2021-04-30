@@ -28,7 +28,7 @@ namespace Authentication
         {
             services.AddControllers();
 
-            var key = "Thisismytestprivatekey";
+            var key = "thisismytestprivatekey";
 
             services.AddAuthentication(x =>
             {
@@ -51,7 +51,7 @@ namespace Authentication
             
             services.AddAuthorization();
 
-            var connection = @"Server=authdb;Database=master;User=sa;Password=Your_password123;";
+            var connection = "Server=authdb;Database=master;User=sa;Password=Your_password123;";
 
             services.AddDbContext<UserContext>(
                  options => options.UseSqlServer(connection));
@@ -67,6 +67,7 @@ namespace Authentication
             services.AddMessagePublishing("Authentication Service", builder => {
                 builder.WithHandler<UserRegisteredMessageHandler>("UserRegistered");
                 builder.WithHandler<UserChangedMessageHandler>("UserChanged");
+                builder.WithHandler<UserDeletedMessageHandler>("UserDeleted");
             });
         }
 

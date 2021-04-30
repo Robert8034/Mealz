@@ -47,5 +47,15 @@ namespace Authentication
 
             return Guid.Parse(claim);
         }
+
+        public string GetRole(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+            var role = securityToken.Claims.Where(e => e.Type == "role").FirstOrDefault().Value;
+
+            return role.ToString();
+        }
     }
 }

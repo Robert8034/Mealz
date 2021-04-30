@@ -63,5 +63,20 @@ namespace UserService.Controllers
             
             return BadRequest("User could not be updated");
         }
+
+        [Authorize(Roles = "User,Chef,Moderator,Admin")]
+        [HttpDelete("deleteUser")]
+        public async Task<IActionResult> DeleteUser([FromBody] Guid userId)
+        {
+            if (userId == Guid.Empty) return BadRequest("User ID is invalid");
+
+            var user = _userService.GetUser(userId);
+
+            if (user == null) return BadRequest("User could not be found");
+
+            if (await _userService.DeleteUser(user)) return Ok();
+
+            return BadRequest("User could not be deleted");
+        }
     }
 }

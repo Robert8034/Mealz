@@ -7,5 +7,6 @@ namespace Authentication
     {
         string WriteToken(Guid id, Roles role);
         Guid ReadToken(string token);
+        string GetRole(string token);
     }
 }

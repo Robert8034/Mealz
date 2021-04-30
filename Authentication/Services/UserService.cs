@@ -71,5 +71,16 @@ namespace Authentication.Services
         {
             return _userContext.Users.FirstOrDefault(e => e.UserId == userId);
         }
+
+        public void DeleteUser(Guid userId)
+        {
+            var user = _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+
+            if (user != null)
+            {
+                _userContext.Remove(user);
+                _userContext.SaveChanges();
+            }
+        }
     }
 }

@@ -51,6 +51,16 @@ namespace Authentication.Controllers
             return Ok(id);
         }
 
+        [HttpGet("getRole")]
+        public IActionResult GetRole()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+
+            var role = _jwtAuthenticationManager.GetRole(token);
+
+            return Ok(role);
+        }
+
         [Authorize(Roles = "Moderator,Admin")]
         [HttpPost("upgradeToChef")]
         public IActionResult UpgradeToChef([FromBody] Guid targetUserId)

@@ -13,5 +13,6 @@ namespace Authentication.Services
         void ChangeUser(Guid userId, string email);
         User GetUser(Guid userId);
         void ChangeUserRole(User user, Roles role);
+        void DeleteUser(Guid userId);
     }
 }

@@ -29,6 +29,7 @@ namespace Shared.Messaging
 
                 channel.QueueBind("Authentication Service", "mealz", "UserRegistered");
                 channel.QueueBind("Authentication Service", "mealz", "UserChanged");
+                channel.QueueBind("Authentication Service", "mealz", "UserDeleted");
 
                 configured = true;
             }

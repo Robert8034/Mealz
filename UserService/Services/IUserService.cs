@@ -15,5 +15,7 @@ namespace UserService.Services
         User GetUser(Guid userId);
 
         Task<bool> UpdateUser(User user);
+
+        Task<bool> DeleteUser(User user);
     }
 }

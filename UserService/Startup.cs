@@ -54,7 +54,7 @@ namespace UserService
 
             services.AddAuthorization();
 
-            var connection = @"Server=userdb;Database=master;User=sa;Password=Your_password123;";
+            var connection = "Server=userdb;Database=master;User=sa;Password=Your_password123;";
 
             services.AddDbContext<UserContext>(
                  options => options.UseSqlServer(connection));
@@ -75,7 +75,7 @@ namespace UserService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
 
             app.UseAuthentication();

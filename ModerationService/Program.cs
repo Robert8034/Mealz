@@ -7,9 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace APIGateway
+namespace ModerationService
 {
-    public static class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -21,10 +21,6 @@ namespace APIGateway
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration(config =>
-                    config.AddJsonFile($"ocelot.Development.json"));
-                })
-            .ConfigureLogging(logging => logging.AddConsole());
-        
+                });
     }
 }
