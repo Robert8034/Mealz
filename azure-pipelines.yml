@@ -55,13 +55,6 @@ steps:
     projectKey: 'Robert8034_Mealz'
     projectName: 'Mealz'
 
-- task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
-  inputs:
-    solution: 'Mealz.sln'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies'
   inputs:
