@@ -19,13 +19,10 @@ jobs:
           dotnet-version: 5.0.x
       - name: Restore dependencies
         run: dotnet restore
-        working-directory: Authentication_Service
       - name: Build
         run: dotnet build --no-restore
-        working-directory: Authentication_Service
       - name: Test
         run: dotnet test --no-build --verbosity normal
-        working-directory: Authentication_Service
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
