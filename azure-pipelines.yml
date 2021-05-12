@@ -36,6 +36,16 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
+
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud Mealz'
+    organization: 'robert8034'
+    scannerMode: 'MSBuild'
+    projectKey: 'Robert8034_Mealz'
+    projectName: 'Mealz'
+
 - task: DotNetCoreCLI@2
   displayName: 'Build'
   inputs:
@@ -46,14 +56,6 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/Mealz.sln'
-
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'SonarCloud Mealz'
-    organization: 'robert8034'
-    scannerMode: 'MSBuild'
-    projectKey: 'Robert8034_Mealz'
-    projectName: 'Mealz'
 
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies'
