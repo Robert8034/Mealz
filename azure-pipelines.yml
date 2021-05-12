@@ -32,15 +32,10 @@ variables:
 
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
+- task: DotNetCoreCLI@2
   inputs:
-    versionSpec: 4.4.1
-
-- task: NuGetCommand@2
-  displayName: 'NuGet restore'
-  inputs:
-    restoreSolution: 'Mealz.sln'
+    command: 'restore'
+    feedsToUse: 'select'
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SonarCloud Mealz'
