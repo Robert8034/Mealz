@@ -63,6 +63,8 @@ namespace UserService
 
             services.AddMessagePublishing("User Service");
 
+            services.AddScoped<IUserDAL, UserDAL>();
+
             services.AddScoped<IUserService, Services.UserService>();
         }
 

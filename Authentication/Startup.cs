@@ -60,6 +60,8 @@ namespace Authentication
 
             services.AddSingleton<ICryptographyService, CrypthographyService>();
 
+            services.AddScoped<IUserDAL, UserDAL>();
+
             services.AddScoped<IUserService, UserService>();
 
             services.AddSharedServices("Authentication Service");

@@ -11,15 +11,15 @@ namespace Authentication.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserContext _userContext;
+        private readonly IUserDAL _userDAL;
 
         private readonly ICryptographyService _cryptographyService;
 
         private readonly IJwtAuthenticationManager _jwtAuthenticationManager;
 
-        public UserService(UserContext userContext, ICryptographyService cryptographyService, IJwtAuthenticationManager jwtAuthenticationManager)
+        public UserService(IUserDAL userDAL, ICryptographyService cryptographyService, IJwtAuthenticationManager jwtAuthenticationManager)
         {
-            _userContext = userContext;
+            _userDAL = userDAL;
             _cryptographyService = cryptographyService;
             _jwtAuthenticationManager = jwtAuthenticationManager;
         }
@@ -32,17 +32,16 @@ namespace Authentication.Services
 
             var stringSalt = Convert.ToBase64String(salt);
 
-            _userContext.Users.Add(new Models.User { UserId = userId, Email = email, Password = hashedPassword, Salt = stringSalt, Role = Models.Roles.User });
-            _userContext.SaveChanges();
+            _userDAL.AddUser(new User { UserId = userId, Email = email, Password = hashedPassword, Salt = stringSalt, Role = Roles.User });
         }
 
         public string Authenticate(string email, string password)
         {
-            var user = _userContext.Users.FirstOrDefault(e => e.Email == email);
+            var user = _userDAL.GetUserByEmail(email);
 
             if (user != null && user.Password == _cryptographyService.HashInput(password, user.Salt))
             {
-                var result = _userContext.Users.FirstOrDefault(e => e.Email == email);
+                var result = _userDAL.GetUserByEmail(email);
                 return _jwtAuthenticationManager.WriteToken(result.UserId, result.Role);
             }
 
@@ -51,12 +50,12 @@ namespace Authentication.Services
 
         public void ChangeUser(Guid userId, string email)
         {
-            var user = _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+            var user = _userDAL.GetUserById(userId);
 
             if (user != null)
             {
                 user.Email = email;
-                _userContext.SaveChanges();
+                _userDAL.Save();
             }
         }
 
@@ -64,22 +63,21 @@ namespace Authentication.Services
         {
             user.Role = role;
 
-            _userContext.SaveChanges();
+            _userDAL.Save();
         }
 
         public User GetUser(Guid userId)
         {
-            return _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+            return _userDAL.GetUserById(userId);
         }
 
         public void DeleteUser(Guid userId)
         {
-            var user = _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+            var user = _userDAL.GetUserById(userId);
 
             if (user != null)
             {
-                _userContext.Remove(user);
-                _userContext.SaveChanges();
+                _userDAL.DeleteUser(user);
             }
         }
     }

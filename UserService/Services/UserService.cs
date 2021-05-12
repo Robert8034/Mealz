@@ -10,25 +10,25 @@ namespace UserService.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserContext _userContext;
+        private readonly IUserDAL _userDAL;
         private readonly IMessagePublisher _messagePublisher;
 
-        public UserService(UserContext userContext, IMessagePublisher messagePublisher)
+        public UserService(IUserDAL userDAL, IMessagePublisher messagePublisher)
         {
-            _userContext = userContext;
+            _userDAL = userDAL;
             _messagePublisher = messagePublisher;
         }
         public bool CheckCredentials(string email, string emailConfirm, string password, string passwordConfirm)
         {
             if ((email == emailConfirm) && (password == passwordConfirm))
             {
-                if (_userContext.Users.FirstOrDefault(e => e.Email == email) == null) return true;
+                if (_userDAL.GetUserByEmail(email) == null) return true;
             }
 
             return false;
         }
 
-        public void Register(Guid userId, string email, string password, string displayName, string biography)
+        public async Task Register(Guid userId, string email, string password, string displayName, string biography)
         {
             var user = new User()
             {
@@ -38,18 +38,17 @@ namespace UserService.Services
                 Biography = biography
             };
 
-            _userContext.Add(user);
-            _userContext.SaveChanges();
+            await _userDAL.AddUser(user);
         }
 
         public User GetUser(Guid userId)
         {
-            return _userContext.Users.FirstOrDefault(e => e.UserId == userId);
+            return _userDAL.GetUserById(userId);
         }
 
         public async Task<bool> UpdateUser(User user)
         {
-            var originalUser = _userContext.Users.FirstOrDefault(e => e.UserId == user.UserId);
+            var originalUser = _userDAL.GetUserById(user.UserId);
 
             if (originalUser != null)
             {
@@ -64,7 +63,7 @@ namespace UserService.Services
                         await _messagePublisher.PublishMessageAsync("UserChanged", new { user.UserId, user.Email, Password = "" });
                     }
 
-                    await _userContext.SaveChangesAsync();
+                    await _userDAL.Save();
 
                     return true;
                 }
@@ -75,7 +74,7 @@ namespace UserService.Services
 
         private bool CheckIfEmailIsInUse(string email, Guid userId)
         {
-            var checkedUser = _userContext.Users.FirstOrDefault(e => e.Email == email);
+            var checkedUser = _userDAL.GetUserByEmail(email);
 
             if (checkedUser == null) return false;
 
@@ -86,11 +85,9 @@ namespace UserService.Services
 
         public async Task<bool> DeleteUser(User user)
         {
-            _userContext.Remove(user);
+            await _userDAL.DeleteUser(user);
 
-            await _userContext.SaveChangesAsync();
-
-            if (_userContext.Users.FirstOrDefault(e => e.UserId == user.UserId) == null)
+            if (_userDAL.GetUserById(user.UserId) == null)
             {
                 await _messagePublisher.PublishMessageAsync("UserDeleted", new { user.UserId });
                 return true;
