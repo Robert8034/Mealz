@@ -44,6 +44,7 @@ steps:
   inputs:
     command: 'restore'
     feedsToUse: 'select'
+    arguments: 'Mealz.sln'
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SonarCloud Mealz'
