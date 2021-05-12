@@ -26,6 +26,23 @@ variables:
 
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud Mealz'
+    organization: 'robert8034'
+    scannerMode: 'MSBuild'
+    projectKey: 'Robert8034_Mealz'
+    projectName: 'Mealz'
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: Kubernetes@1
   displayName: kubectl apply using configFile
   inputs:
