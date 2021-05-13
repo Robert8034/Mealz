@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
+using NUnit.Framework;
 
 namespace Authentication.Tests.UnitTests
 {
+    [TestFixture]
     public class UserServiceTests
     {
-        [Fact]
+        [Test]
         public void AddUserSuccesTest()
         {
             //Arrange
@@ -23,10 +24,10 @@ namespace Authentication.Tests.UnitTests
             userService.AddUser(id, "Test@mail.com", "Password");
 
             //Assert
-            Assert.Equal(id, mockUserDAL.users.First().UserId);
+            Assert.AreEqual(id, mockUserDAL.users.First().UserId);
         }
 
-        [Fact]
+        [Test]
         public void AuthenticateSuccesTest()
         {
             //Arrange
@@ -41,11 +42,11 @@ namespace Authentication.Tests.UnitTests
             string result = userService.Authenticate("Email@Email.com", "12345");
 
             //Assert
-            Assert.Equal("Token", result);
+            Assert.AreEqual("Token", result);
         }
 
 
-        [Fact]
+        [Test]
         public void AuthenticateFailureTest()
         {
             //Arrange
@@ -63,7 +64,7 @@ namespace Authentication.Tests.UnitTests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Test]
         public void ChangeUserSuccesTest()
         {
             //Arrange
@@ -78,11 +79,11 @@ namespace Authentication.Tests.UnitTests
             userService.ChangeUser(id, "New@Email.com");
 
             //Assert
-            Assert.Equal("New@Email.com", mockUserDAL.users.First().Email);
-            Assert.Equal(id, mockUserDAL.users.First().UserId);
+            Assert.AreEqual("New@Email.com", mockUserDAL.users.First().Email);
+            Assert.AreEqual(id, mockUserDAL.users.First().UserId);
         }
 
-        [Fact]
+        [Test]
         public void ChangeUserNoChangeTest()
         {
             //Arrange
@@ -97,12 +98,12 @@ namespace Authentication.Tests.UnitTests
             userService.ChangeUser(id, "Email@Email.com");
 
             //Assert
-            Assert.Equal("Email@Email.com", mockUserDAL.users.First().Email);
-            Assert.Equal(id, mockUserDAL.users.First().UserId);
+            Assert.AreEqual("Email@Email.com", mockUserDAL.users.First().Email);
+            Assert.AreEqual(id, mockUserDAL.users.First().UserId);
         }
 
 
-        [Fact]
+        [Test]
         public void ChangeUserNotExistTest()
         {
             //Arrange
@@ -117,11 +118,11 @@ namespace Authentication.Tests.UnitTests
             userService.ChangeUser(Guid.NewGuid(), "Email@Email.com");
 
             //Assert
-            Assert.Equal("Email@Email.com", mockUserDAL.users.First().Email);
-            Assert.Equal(id, mockUserDAL.users.First().UserId);
+            Assert.AreEqual("Email@Email.com", mockUserDAL.users.First().Email);
+            Assert.AreEqual(id, mockUserDAL.users.First().UserId);
         }
 
-        [Fact]
+        [Test]
         public void ChangeUserRoleSuccesTest()
         {
             //Arrange
@@ -136,11 +137,11 @@ namespace Authentication.Tests.UnitTests
             userService.ChangeUserRole(user, Roles.Moderator);
 
             //Assert
-            Assert.Equal(Roles.Moderator, mockUserDAL.users.First().Role);
-            Assert.Equal(id, mockUserDAL.users.First().UserId);
+            Assert.AreEqual(Roles.Moderator, mockUserDAL.users.First().Role);
+            Assert.AreEqual(id, mockUserDAL.users.First().UserId);
         }
 
-        [Fact]
+        [Test]
         public void GetUserSuccesTest()
         {
             //Arrange
@@ -155,10 +156,10 @@ namespace Authentication.Tests.UnitTests
             var result = userService.GetUser(id);
 
             //Assert
-            Assert.Equal(id, result.UserId);
+            Assert.AreEqual(id, result.UserId);
         }
 
-        [Fact]
+        [Test]
         public void GetUserFailureTest()
         {
             //Arrange
@@ -176,7 +177,7 @@ namespace Authentication.Tests.UnitTests
             Assert.Null(result);
         }
 
-        [Fact]
+        [Test]
         public void DeleteUserSuccesTest()
         {
             //Arrange
@@ -194,7 +195,7 @@ namespace Authentication.Tests.UnitTests
             Assert.Null(mockUserDAL.users.FirstOrDefault(e => e.UserId == id));
         }
 
-        [Fact]
+        [Test]
         public void DeleteUserFailureTest()
         {
             //Arrange
@@ -209,7 +210,7 @@ namespace Authentication.Tests.UnitTests
             userService.DeleteUser(Guid.NewGuid());
 
             //Assert
-            Assert.Single(mockUserDAL.users);
+            Assert.AreEqual(1, mockUserDAL.users.Count());
         }
     }
 }

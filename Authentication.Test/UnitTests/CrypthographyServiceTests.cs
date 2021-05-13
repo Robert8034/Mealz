@@ -1,16 +1,17 @@
 ﻿using Authentication.Services;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Authentication.Tests.UnitTests
 {
+    [TestFixture]
     public class CrypthographyServiceTests
     {
-        [Fact]
+        [Test]
         public void HashPasswordTest()
         {
             //Arrange
@@ -28,10 +29,10 @@ namespace Authentication.Tests.UnitTests
             var result = crypthographyService.HashPassword("12345", byteArray);
 
             //Assert
-            Assert.Equal(expected, result);
+            Assert.AreEqual(expected, result);
         }
 
-        [Fact]
+        [Test]
         public void GenerateSaltTest()
         {
             //Arrange
@@ -44,7 +45,7 @@ namespace Authentication.Tests.UnitTests
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Test]
         public void HashInputTest()
         {
             //Arrange
@@ -64,7 +65,7 @@ namespace Authentication.Tests.UnitTests
             var result = crypthographyService.HashInput("12345", salt);
 
             //Assert
-            Assert.Equal(exptected, result);
+            Assert.AreEqual(exptected, result);
         }
     }
 }

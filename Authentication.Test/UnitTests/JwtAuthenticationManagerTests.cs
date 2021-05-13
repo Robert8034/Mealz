@@ -1,14 +1,15 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Authentication.Tests.UnitTests
 {
+    [TestFixture]
     public class JwtAuthenticationManagerTests
     {
-        [Fact]
+        [Test]
         public void WriteTokenTest()
         {
             //Arrange
@@ -21,7 +22,7 @@ namespace Authentication.Tests.UnitTests
             Assert.NotNull(result);
         }
 
-        [Fact]
+        [Test]
         public void ReadTokenTest()
         {
             //Arrange
@@ -35,10 +36,10 @@ namespace Authentication.Tests.UnitTests
             var result = jwtAuthenticationManager.ReadToken(token);
 
             //Assert
-            Assert.Equal(id, result);
+            Assert.AreEqual(id, result);
         }
 
-        [Fact]
+        [Test]
         public void GetRoleTest()
         {
             //Arrange
@@ -52,7 +53,7 @@ namespace Authentication.Tests.UnitTests
             var result = jwtAuthenticationManager.GetRole(token);
 
             //Assert
-            Assert.Equal(Models.Roles.User.ToString(), result);
+            Assert.AreEqual(Models.Roles.User.ToString(), result);
         }
     }
 }
