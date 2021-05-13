@@ -44,16 +44,16 @@ steps:
     projectKey: 'Robert8034_Mealz'
     projectName: 'Mealz'
 
-- task: VSBuild@1
-  inputs:
-    solution: '**\*.sln'
-    configuration: '$(BuildConfiguration)'
-
 - task: DotNetCoreCLI@2
   displayName: 'Restore'
   inputs:
     command: 'restore'
     projects: '**/Mealz.sln'
+
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    configuration: '$(BuildConfiguration)'
 
 - task: PowerShell@2
   inputs:
