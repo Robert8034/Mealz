@@ -52,10 +52,11 @@ steps:
     command: 'restore'
     projects: '**/Mealz.sln'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
   inputs:
-    solution: '**\*.sln'
-    configuration: '$(BuildConfiguration)'
+    command: 'build'
+    arguments: '**/Mealz.sln'
 
 - task: PowerShell@2
   inputs:
