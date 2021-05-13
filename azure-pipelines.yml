@@ -21,11 +21,90 @@ variables:
   azureResourceGroup: 'Mealz'
   kubernetesCluster: 'MealzCluster'
 
+  buildConfiguration: 'Release'
+  buildPlatform: 'any cpu'
+
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
-
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '2.0.x'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud Mealz'
+    organization: 'robert8034'
+    scannerMode: 'MSBuild'
+    projectKey: 'Robert8034_Mealz'
+    projectName: 'Mealz'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore'
+  inputs:
+    command: 'restore'
+    projects: '**/Mealz.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+    arguments: 'Mealz.sln'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Env:DOTNET_ROOT= (Get-Command dotnet).Path.Replace('dotnet.exe','sdk\2.1.300')
+      dotnet tool install dotnet-reportgenerator-globaltool --tool-path . --version 4.0.12
+      dotnet tool install coverlet.console --tool-path . --version 1.4.1
+      mkdir .\reports
+      $testDll = gci -Recurse | ?{ $_.FullName -like ("*bin\{0}\{1}" -f "$(BuildConfiguration)", "$(TestDllFile)") }
+      $coverlet = "$pwd\coverlet.exe"
+      & $coverlet $testDll.FullName --target "dotnet" --targetargs ("vstest {0} --logger:trx" -f $testDll.FullName) --format "cobertura"
+      gci -Recurse |
+      ?{ $_.Name -eq "coverage.cobertura.xml"} |
+      %{ &"$pwd\reportgenerator.exe" ("-reports:{0}" -f $_.FullName) "-targetdir:reports" "-reportstypes:HTMLInline;HTMLChart" }
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '**coverage.cobertura.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)\report'
+
+- task: VisualStudioTestPlatformInstaller@1
+  inputs:
+    packageFeedSelector: 'nugetOrg'
+    versionSelector: 'latestPreRelease'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'D:\a\_temp\TestResults'
+    Contents: '**'
+    TargetFolder: 'D:\a\1\TestResults'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+    
 - task: Kubernetes@1
   displayName: kubectl apply using configFile
   inputs:
