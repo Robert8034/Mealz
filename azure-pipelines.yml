@@ -49,6 +49,12 @@ steps:
     solution: '**\*.sln'
     configuration: '$(BuildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  displayName: 'Restore'
+  inputs:
+    command: 'restore'
+    projects: '**/Mealz.sln'
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
