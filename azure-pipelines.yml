@@ -8,9 +8,6 @@ trigger:
 resources:
 - repo: self
 
-pool:
-  vmImage: 'windows-latest'
-
 variables:
 
   # Container registry service connection established during pipeline creation
