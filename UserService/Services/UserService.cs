@@ -20,10 +20,7 @@ namespace UserService.Services
         }
         public bool CheckCredentials(string email, string emailConfirm, string password, string passwordConfirm)
         {
-            if ((email == emailConfirm) && (password == passwordConfirm))
-            {
-                if (_userDAL.GetUserByEmail(email) == null) return true;
-            }
+            if ((email == emailConfirm) && (password == passwordConfirm) && (_userDAL.GetUserByEmail(email) == null)) return true;
 
             return false;
         }
@@ -50,23 +47,20 @@ namespace UserService.Services
         {
             var originalUser = _userDAL.GetUserById(user.UserId);
 
-            if (originalUser != null)
-            {
-                if (!CheckIfEmailIsInUse(user.Email, user.UserId))
+            if ((originalUser != null) && (!CheckIfEmailIsInUse(user.Email, user.UserId)))
+            { 
+                originalUser.Biography = user.Biography;
+                originalUser.DisplayName = user.DisplayName;
+
+                if (originalUser.Email != user.Email)
                 {
-                    originalUser.Biography = user.Biography;
-                    originalUser.DisplayName = user.DisplayName;
-
-                    if (originalUser.Email != user.Email)
-                    {
-                        originalUser.Email = user.Email;
-                        await _messagePublisher.PublishMessageAsync("UserChanged", new { user.UserId, user.Email, Password = "" });
-                    }
-
-                    await _userDAL.Save();
-
-                    return true;
+                    originalUser.Email = user.Email;
+                    await _messagePublisher.PublishMessageAsync("UserChanged", new { user.UserId, user.Email, Password = "" });
                 }
+
+                await _userDAL.Save();
+
+                return true;  
             }
 
             return false;
