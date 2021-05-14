@@ -7,12 +7,10 @@ namespace Shared.Messaging
 {
     internal class RabbitMqMessagePublisher : IMessagePublisher
     {
-        private readonly string _queueName;
         private readonly RabbitMqConnection _connection;
 
-        public RabbitMqMessagePublisher(QueueName queueName, RabbitMqConnection connection)
+        public RabbitMqMessagePublisher(RabbitMqConnection connection)
         {
-            _queueName = queueName.Name;
             _connection = connection;
         }
 

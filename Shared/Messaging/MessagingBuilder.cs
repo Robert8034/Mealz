@@ -18,7 +18,7 @@ namespace Shared.Messaging
         /// <summary>
         /// the message handlers that are registered
         /// </summary>
-        private Dictionary<string, Type> _messageHandlers = new Dictionary<string, Type>();
+        private readonly Dictionary<string, Type> _messageHandlers = new Dictionary<string, Type>();
 
         /// <summary>
         /// Readonly variant of all the message handlers registered by the <see cref="MessagingBuilder"/>

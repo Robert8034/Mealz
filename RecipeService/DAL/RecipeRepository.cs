@@ -26,7 +26,7 @@ namespace RecipeService.DAL
         {
             var recipes = _context.Recipes.AsQueryable().ToList();
 
-            var recipeCount = recipes.Count();
+            var recipeCount = recipes.Count;
 
             if (recipeCount == 0 || lowerIndex > recipeCount) return new List<Recipe>();
 
