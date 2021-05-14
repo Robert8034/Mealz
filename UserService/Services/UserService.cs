@@ -28,7 +28,7 @@ namespace UserService.Services
             return false;
         }
 
-        public async Task Register(Guid userId, string email, string password, string displayName, string biography)
+        public async Task Register(Guid userId, string email, string displayName, string biography)
         {
             var user = new User()
             {

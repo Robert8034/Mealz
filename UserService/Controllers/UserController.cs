@@ -31,7 +31,7 @@ namespace UserService.Controllers
             if (_userService.CheckCredentials(userModel.Email, userModel.EmailConfirm, userModel.Password, userModel.PasswordConfirm)) {
                 var userId = Guid.NewGuid();
 
-                await _userService.Register(userId, userModel.Email, userModel.Password, userModel.DisplayName, userModel.Biography);
+                await _userService.Register(userId, userModel.Email, userModel.DisplayName, userModel.Biography);
 
                 await _messagePublisher.PublishMessageAsync("UserRegistered", new { UserId = userId, userModel.Email, userModel.Password });
                 
