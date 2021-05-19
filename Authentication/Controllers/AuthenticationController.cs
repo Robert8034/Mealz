@@ -24,13 +24,6 @@ namespace Authentication.Controllers
             _jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
-        // GET: api/<NameController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "New Jersey", "New York" };
-        }
-
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] UserCred userCred)
         {

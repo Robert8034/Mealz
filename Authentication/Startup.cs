@@ -28,7 +28,7 @@ namespace Authentication
         {
             services.AddControllers();
 
-            var key = "thisismytestprivatekey";
+            var key = "Thisismytestprivatekey";
 
             services.AddAuthentication(x =>
             {

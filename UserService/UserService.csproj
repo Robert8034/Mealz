@@ -6,7 +6,7 @@
     <UserSecretsId>1e600074-14b2-45ef-b44c-bae860781532</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mealz_Shared_Project" Version="1.0.1" />
+    <PackageReference Include="Mealz_Shared_Project" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

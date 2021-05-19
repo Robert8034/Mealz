@@ -13,7 +13,7 @@ services:
         - "50003:443"
 
   authentication:
-    image: robert8034/authentication:dev
+    image: robert8034/authentication:dev-v1
     tty: true
     stdin_open: true
     build:
@@ -21,7 +21,7 @@ services:
       dockerfile: Authentication/Dockerfile
     
   userservice:
-    image: robert8034/userservice:dev
+    image: robert8034/userservice:dev-v1
     tty: true
     stdin_open: true
     build:
@@ -29,7 +29,7 @@ services:
       dockerfile: UserService/Dockerfile
    
   recipeservice:
-    image: robert8034/recipeservice:dev
+    image: robert8034/recipeservice:dev-v1
     tty: true
     stdin_open: true
     build:
@@ -39,6 +39,14 @@ services:
         MongoDB__Host: mongo
     depends_on:
         - mongo
+
+  moderationservice:
+    image: robert8034/moderationservice:dev-v1
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ModerationService/Dockerfile
 
   rabbit:
     image: rabbitmq:3-management
@@ -71,8 +79,17 @@ services:
         ACCEPT_EULA: "Y"
     ports:
         - "5674:5672"
-        - "1434:1433"
+        - "1443:1433"
 
+  moderationdb:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: ModerationDB
+    environment:
+        SA_PASSWORD: "Your_password123"
+        ACCEPT_EULA: "Y"
+    ports:
+        - "5675:5672"
+        - "1453:1433"
   mongo:
     image: mongo
     restart: always
