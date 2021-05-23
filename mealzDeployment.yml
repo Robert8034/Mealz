@@ -1,20 +1,5 @@
 apiVersion: v1
 items:
-- apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    name: http-ingress
-  spec:
-    rules:
-    - http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: apigateway
-              port:
-                number: 50001
 - apiVersion: v1
   kind: Service
   metadata:
@@ -43,7 +28,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -61,11 +46,81 @@ items:
       io.kompose.service: authdb
   status:
     loadBalancer: {}
+
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: authentication
+    name: authentication
+  spec:
+    ports:
+    - name: "50010"
+      port: 50010
+      targetPort: 80
+    - name: "50011"
+      port: 50011
+      targetPort: 443
+    selector:
+      io.kompose.service: authentication
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationdb
+    name: moderationdb
+  spec:
+    ports:
+    - name: "5675"
+      port: 5675
+      targetPort: 5672
+    - name: "1453"
+      port: 1453
+      targetPort: 1433
+    selector:
+      io.kompose.service: moderationdb
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationservice
+    name: moderationservice
+  spec:
+    ports:
+    - name: "50040"
+      port: 50040
+      targetPort: 80
+    - name: "50041"
+      port: 50041
+      targetPort: 443
+    selector:
+      io.kompose.service: moderationservice
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -80,11 +135,12 @@ items:
       io.kompose.service: mongo
   status:
     loadBalancer: {}
+
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -99,11 +155,12 @@ items:
       io.kompose.service: mongo-express
   status:
     loadBalancer: {}
+
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -121,11 +178,35 @@ items:
       io.kompose.service: rabbit
   status:
     loadBalancer: {}
+
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: recipeservice
+    name: recipeservice
+  spec:
+    ports:
+    - name: "50030"
+      port: 50030
+      targetPort: 80
+    - name: "50031"
+      port: 50031
+      targetPort: 443
+    selector:
+      io.kompose.service: recipeservice
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -136,11 +217,34 @@ items:
     - name: "5674"
       port: 5674
       targetPort: 5672
-    - name: "1434"
-      port: 1434
+    - name: "1443"
+      port: 1443
       targetPort: 1433
     selector:
       io.kompose.service: userdb
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: userservice
+    name: userservice
+  spec:
+    ports:
+    - name: "50020"
+      port: 50020
+      targetPort: 80
+    - name: "50021"
+      port: 50021
+      targetPort: 443
+    selector:
+      io.kompose.service: userservice
   status:
     loadBalancer: {}
 
@@ -170,7 +274,7 @@ items:
           io.kompose.service: apigateway
       spec:
         containers:
-        - image: robert8034/apigateway:dev
+        - image: robert8034/apigateway:dev-v1
           imagePullPolicy: ""
           name: apigateway
           ports:
@@ -186,11 +290,12 @@ items:
         serviceAccountName: ""
         volumes: null
   status: {}
+
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -205,7 +310,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -232,7 +337,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -247,16 +352,19 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
           io.kompose.service: authentication
       spec:
         containers:
-        - image: robert8034/authentication:dev
+        - image: robert8034/authentication:dev-v1
           imagePullPolicy: ""
           name: authentication
+          ports:
+          - containerPort: 80
+          - containerPort: 443
           resources: {}
           stdin: true
           tty: true
@@ -268,7 +376,88 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationdb
+    name: moderationdb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: moderationdb
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: moderationdb
+      spec:
+        containers:
+        - env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: Your_password123
+          image: mcr.microsoft.com/mssql/server
+          imagePullPolicy: ""
+          name: moderationdb
+          ports:
+          - containerPort: 5672
+          - containerPort: 1433
+          resources: {}
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: moderationservice
+    name: moderationservice
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: moderationservice
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: moderationservice
+      spec:
+        containers:
+        - image: robert8034/moderationservice:dev
+          imagePullPolicy: ""
+          name: moderationservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          resources: {}
+          stdin: true
+          tty: true
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -283,7 +472,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -309,7 +498,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -324,7 +513,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -350,7 +539,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -365,7 +554,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -388,7 +577,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -403,7 +592,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -413,9 +602,12 @@ items:
         - env:
           - name: MongoDB__Host
             value: mongo
-          image: robert8034/recipeservice:dev
+          image: robert8034/recipeservice:dev-v1
           imagePullPolicy: ""
           name: recipeservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
           resources: {}
           stdin: true
           tty: true
@@ -427,7 +619,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -442,7 +634,7 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -469,7 +661,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -484,16 +676,19 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
           io.kompose.service: userservice
       spec:
         containers:
-        - image: robert8034/userservice:dev
+        - image: robert8034/userservice:dev-v1
           imagePullPolicy: ""
           name: userservice
+          ports:
+          - containerPort: 80
+          - containerPort: 443
           resources: {}
           stdin: true
           tty: true

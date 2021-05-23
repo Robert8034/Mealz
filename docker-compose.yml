@@ -19,6 +19,9 @@ services:
     build:
       context: .
       dockerfile: Authentication/Dockerfile
+    ports:
+        - "50010:80"
+        - "50011:443"
     
   userservice:
     image: robert8034/userservice:dev-v1
@@ -27,6 +30,9 @@ services:
     build:
       context: .
       dockerfile: UserService/Dockerfile
+    ports:
+        - "50020:80"
+        - "50021:443"
    
   recipeservice:
     image: robert8034/recipeservice:dev-v1
@@ -35,6 +41,9 @@ services:
     build:
       context: .
       dockerfile: RecipeService/Dockerfile
+    ports:
+        - "50030:80"
+        - "50031:443"
     environment:
         MongoDB__Host: mongo
     depends_on:
@@ -47,6 +56,9 @@ services:
     build:
       context: .
       dockerfile: ModerationService/Dockerfile
+    ports:
+        - "50040:80"
+        - "50041:443"
 
   rabbit:
     image: rabbitmq:3-management
@@ -107,9 +119,3 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-  moderationservice:
-    image: ${DOCKER_REGISTRY-}moderationservice
-    build:
-      context: .
-      dockerfile: ModerationService/Dockerfile
-
