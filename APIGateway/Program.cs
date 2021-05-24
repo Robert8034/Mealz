@@ -20,9 +20,11 @@ namespace APIGateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration(config =>
-                    config.AddJsonFile($"ocelot.Development.json"));
+                    config.AddJsonFile($"ocelot{env}.json"));
+                    Console.WriteLine($"Using ocelot{env}.json file");
                 })
             .ConfigureLogging(logging => logging.AddConsole());
         

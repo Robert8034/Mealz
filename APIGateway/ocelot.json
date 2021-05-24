@@ -79,46 +79,40 @@
     {
       "DownstreamPathTemplate": "/api/recipe",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "recipeservice",
-          "Port": 80
-        }
-      ],
       "UpstreamPathTemplate": "/recipeservice",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "ServiceName": "recipeservice",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/recipe/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "recipeservice",
-          "Port": 80
-        }
-      ],
       "UpstreamPathTemplate": "/recipeservice/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "ServiceName": "recipeservice",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/recipe/getRecipes",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "recipeservice",
-          "Port": 80
-        }
-      ],
       "UpstreamPathTemplate": "/getRecipes",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": [ "Post" ],
+      "ServiceName": "recipeservice",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
     }
 
   ],
