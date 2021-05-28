@@ -12,5 +12,7 @@ namespace ModerationService.Services
         Task PostRequest(Request request);
         List<Report> GetReports();
         Task PostReport(Report report);
+        Task ApproveRequest(Request request);
+        Task DeclineRequest(Request request);
     }
 }

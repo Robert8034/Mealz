@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Authentication.Models;
+using System;
 
 namespace Authentication.Controllers
 {

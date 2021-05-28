@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mealz_Shared_Project" Version="1.0.2" />
+    <PackageReference Include="Mealz_Shared_Project" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.13" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.14" />

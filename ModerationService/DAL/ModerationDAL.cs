@@ -38,5 +38,12 @@ namespace ModerationService.DAL
 
            await _moderationContext.SaveChangesAsync();
         }
+
+        public async Task RemoveRequest(Request request)
+        {
+            _moderationContext.Remove(request);
+        
+           await _moderationContext.SaveChangesAsync();
+        }
     }
 }

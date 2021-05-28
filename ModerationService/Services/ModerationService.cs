@@ -16,6 +16,11 @@ namespace ModerationService.Services
             _moderationDAL = moderationDAL;
         }
 
+        public async Task ApproveRequest(Request request)
+        {
+            await _moderationDAL.RemoveRequest(request);
+        }
+
         public List<Report> GetReports()
         {
             return _moderationDAL.GetReports();
@@ -34,6 +39,11 @@ namespace ModerationService.Services
         public async Task PostRequest(Request request)
         {
             await _moderationDAL.PostRequest(request);
+        }
+
+        public async Task DeclineRequest(Request request)
+        {
+            await _moderationDAL.RemoveRequest(request);
         }
     }
 }

@@ -15,5 +15,7 @@ namespace ModerationService.DAL
         List<Report> GetReports();
 
         Task PostReport(Report report);
+
+        Task RemoveRequest(Request request);
     }
 }

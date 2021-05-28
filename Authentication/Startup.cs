@@ -70,6 +70,7 @@ namespace Authentication
                 builder.WithHandler<UserRegisteredMessageHandler>("UserRegistered");
                 builder.WithHandler<UserChangedMessageHandler>("UserChanged");
                 builder.WithHandler<UserDeletedMessageHandler>("UserDeleted");
+                builder.WithHandler<UserRoleUpdatedMessageHandler>("UserRoleUpdated");
             });
         }
 

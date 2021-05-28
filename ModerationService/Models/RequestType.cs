@@ -9,5 +9,6 @@ namespace ModerationService.Models
     {
         Upgrade_To_Chef,
         Upgrade_To_Moderator,
+        Upgrade_To_Admin
     }
 }

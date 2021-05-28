@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   apigateway:
-    image: robert8034/apigateway:dev-v1
+    image: robert8034/apigateway:latest
     tty: true
     stdin_open: true
     build:
@@ -13,7 +13,7 @@ services:
         - "50003:443"
 
   authentication:
-    image: robert8034/authentication:dev-v1
+    image: robert8034/authentication:latest
     tty: true
     stdin_open: true
     build:
@@ -24,7 +24,7 @@ services:
         - "50011:443"
     
   userservice:
-    image: robert8034/userservice:dev-v1
+    image: robert8034/userservice:latest
     tty: true
     stdin_open: true
     build:
@@ -35,7 +35,7 @@ services:
         - "50021:443"
    
   recipeservice:
-    image: robert8034/recipeservice:dev-v1
+    image: robert8034/recipeservice:latest
     tty: true
     stdin_open: true
     build:
@@ -50,7 +50,7 @@ services:
         - mongo
 
   moderationservice:
-    image: robert8034/moderationservice:dev-v1
+    image: robert8034/moderationservice:latest
     tty: true
     stdin_open: true
     build:
@@ -80,8 +80,6 @@ services:
     ports:
         - "5673:5672"
         - "1433:1433"
-    expose:
-        - 1433
 
   userdb:
     image: "mcr.microsoft.com/mssql/server"
