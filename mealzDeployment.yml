@@ -22,7 +22,7 @@ items:
       targetPort: 443
       nodePort: 30001
     selector:
-      app: apigateway
+      io.kompose.service: apigateway
 
 - apiVersion: v1
   kind: Service
@@ -283,7 +283,7 @@ items:
           - containerPort: 443
           env:
             - name: "ASPNETCORE_ENVIRONMENT"
-              value: "Development"
+              value: ""
           resources: {}
           stdin: true
           tty: true
