@@ -83,6 +83,7 @@ steps:
     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
     azureResourceGroup: $(azureResourceGroup)
     kubernetesCluster: $(kubernetesCluster)
+    namespace: 'default'
     command: apply
     useConfigurationFile: true
-    configuration: 'mealzDeployment.yml'
+    configuration: '**/mealzDeployment.yaml'
