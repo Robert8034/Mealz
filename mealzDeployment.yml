@@ -14,11 +14,11 @@ items:
     type: LoadBalancer
     ports:
     - name: "http"
-      port: 50000
+      port: 80
       targetPort: 80
       nodePort: 30000
     - name: "https"
-      port: 50001
+      port: 443
       targetPort: 443
       nodePort: 30001
     selector:
