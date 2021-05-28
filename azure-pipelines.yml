@@ -86,4 +86,4 @@ steps:
     namespace: 'default'
     command: apply
     useConfigurationFile: true
-    configuration: 'mealzDeployment.yaml'
+    configuration: 'mealzDeployment.yml'
