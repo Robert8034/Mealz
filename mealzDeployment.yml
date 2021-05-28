@@ -283,7 +283,7 @@ items:
           - containerPort: 443
           env:
             - name: "ASPNETCORE_ENVIRONMENT"
-              value: "Development"
+              value: ""
           resources: {}
           stdin: true
           tty: true
