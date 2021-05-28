@@ -4,7 +4,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -28,7 +28,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -51,7 +51,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -74,7 +74,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -97,7 +97,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -120,7 +120,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -140,7 +140,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -160,7 +160,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -183,7 +183,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -206,7 +206,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -229,7 +229,7 @@ items:
   kind: Service
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -252,7 +252,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -267,7 +267,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -295,7 +296,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -310,7 +311,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -337,7 +339,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -352,7 +354,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -376,7 +379,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -391,7 +394,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -418,7 +422,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -433,7 +437,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -457,7 +462,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -472,7 +477,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -498,7 +504,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -513,7 +519,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -539,7 +546,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -554,7 +561,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -577,7 +585,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -592,7 +600,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -619,7 +628,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -634,7 +643,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -661,7 +671,7 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
       kompose.version: 1.21.0 (992df58d8)
     creationTimestamp: null
     labels:
@@ -676,7 +686,8 @@ items:
     template:
       metadata:
         annotations:
-          kompose.cmd: kompose convert -f docker-compose.yml -o kubeDeployFile.yml
+          kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yaml
+  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
