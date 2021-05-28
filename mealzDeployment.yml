@@ -274,7 +274,7 @@ items:
           io.kompose.service: apigateway
       spec:
         containers:
-        - image: robert8034/apigateway:dev-v1
+        - image: robert8034/apigateway:latest
           imagePullPolicy: ""
           name: apigateway
           ports:
@@ -359,7 +359,7 @@ items:
           io.kompose.service: authentication
       spec:
         containers:
-        - image: robert8034/authentication:dev-v1
+        - image: robert8034/authentication:latest
           imagePullPolicy: ""
           name: authentication
           ports:
@@ -440,7 +440,7 @@ items:
           io.kompose.service: moderationservice
       spec:
         containers:
-        - image: robert8034/moderationservice:dev
+        - image: robert8034/moderationservice:latest
           imagePullPolicy: ""
           name: moderationservice
           ports:
@@ -602,7 +602,7 @@ items:
         - env:
           - name: MongoDB__Host
             value: mongo
-          image: robert8034/recipeservice:dev-v1
+          image: robert8034/recipeservice:latest
           imagePullPolicy: ""
           name: recipeservice
           ports:
@@ -683,7 +683,7 @@ items:
           io.kompose.service: userservice
       spec:
         containers:
-        - image: robert8034/userservice:dev-v1
+        - image: robert8034/userservice:latest
           imagePullPolicy: ""
           name: userservice
           ports:
