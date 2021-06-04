@@ -36,8 +36,8 @@ items:
     name: authdb
   spec:
     ports:
-    - name: "5673"
-      port: 5673
+    - name: "5672"
+      port: 5672
       targetPort: 5672
     - name: "1433"
       port: 1433
@@ -82,11 +82,11 @@ items:
     name: moderationdb
   spec:
     ports:
-    - name: "5675"
-      port: 5675
+    - name: "5672"
+      port: 5672
       targetPort: 5672
-    - name: "1453"
-      port: 1453
+    - name: "1433"
+      port: 1433
       targetPort: 1433
     selector:
       io.kompose.service: moderationdb
@@ -214,11 +214,11 @@ items:
     name: userdb
   spec:
     ports:
-    - name: "5674"
-      port: 5674
+    - name: "5672"
+      port: 5672
       targetPort: 5672
     - name: "1443"
-      port: 1443
+      port: 1433
       targetPort: 1433
     selector:
       io.kompose.service: userdb
@@ -457,7 +457,6 @@ items:
       metadata:
         annotations:
           kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
-  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -497,7 +496,6 @@ items:
       metadata:
         annotations:
           kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
-  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
@@ -663,7 +661,6 @@ items:
       metadata:
         annotations:
           kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
-  
           kompose.version: 1.21.0 (992df58d8)
         creationTimestamp: null
         labels:
