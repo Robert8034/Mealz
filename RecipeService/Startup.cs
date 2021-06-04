@@ -20,6 +20,7 @@ using RecipeService.Services;
 using Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Binder;
+using Shared.Consul;
 
 namespace RecipeService
 {
@@ -37,6 +38,8 @@ namespace RecipeService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var key = "Thisismytestprivatekey";
 
@@ -96,6 +99,13 @@ namespace RecipeService
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
     }
 }

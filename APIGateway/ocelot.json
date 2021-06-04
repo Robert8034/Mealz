@@ -3,124 +3,174 @@
     {
       "DownstreamPathTemplate": "/api/authentication/authenticate",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/authenticate",
-      "UpstreamHttpMethod": [ "Post" ],
-      "ServiceName": "authentication",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "UpstreamHttpMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/authentication/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/authentication/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "authentication",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/authentication",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authentication",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/authentication",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "authentication",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/user",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/userservice",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/user/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/userservice/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/user/register",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/register",
-      "UpstreamHttpMethod": [ "Post" ],
-      "ServiceName": "userservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
-      }
+      "UpstreamHttpMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/api/recipe",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recipeservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/recipeservice",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "recipeservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/recipe/{everything}",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recipeservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/recipeservice/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
-      },
-      "ServiceName": "recipeservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
       }
     },
     {
       "DownstreamPathTemplate": "/api/recipe/getRecipes",
       "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recipeservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/getRecipes",
-      "UpstreamHttpMethod": [ "Post" ],
-      "ServiceName": "recipeservice",
-      "LoadBalancerOptions": {
-        "Type": "LeastConnection"
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/moderation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moderationservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/moderationservice",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/moderation/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "moderationservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/moderationservice/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
       }
     }
-
   ],
 
   "GlobalConfiguration": {
     "ServiceDiscoveryProvider": {
-      "Namespace": "default",
-      "Type": "kube"
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul"
     }
   }
 }

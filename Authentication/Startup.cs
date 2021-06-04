@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Shared;
+using Shared.Consul;
 
 namespace Authentication
 {
@@ -27,6 +28,8 @@ namespace Authentication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var key = "Thisismytestprivatekey";
 
@@ -105,6 +108,13 @@ namespace Authentication
                         .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<UserContext>();
             context.Database.Migrate();
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig); 
         }
     }
 }

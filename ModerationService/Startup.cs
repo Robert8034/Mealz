@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using ModerationService.DAL;
 using ModerationService.Services;
 using Shared;
+using Shared.Consul;
 
 namespace ModerationService
 {
@@ -33,6 +34,8 @@ namespace ModerationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var key = "Thisismytestprivatekey";
 
@@ -101,6 +104,12 @@ namespace ModerationService
                         .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<ModerationContext>();
             context.Database.Migrate();
+        }
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
     }
 }

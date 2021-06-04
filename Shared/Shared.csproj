@@ -7,7 +7,7 @@
     <Product>Mealz</Product>
     <Description>Shared project used in the Mealz solution. Configures RabbitMQ and adds logging and swagger to the application.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Consul" Version="1.6.10.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />

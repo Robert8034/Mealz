@@ -248,6 +248,25 @@ items:
   status:
     loadBalancer: {}
 
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o mealzDeployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: consul
+    name: consul
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "8500"
+      port: 8500
+      targetPort: 8500
+    selector:
+      io.kompose.service: consul
+
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
@@ -707,6 +726,51 @@ items:
         serviceAccountName: ""
         volumes: null
   status: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+      kompose.version: 1.21.0 (992df58d8)
+    creationTimestamp: null
+    labels:
+      io.kompose.service: consul
+    name: consul
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        io.kompose.service: consul
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+          kompose.version: 1.21.0 (992df58d8)
+        creationTimestamp: null
+        labels:
+          io.kompose.service: consul
+      spec:
+        containers:
+        - args:
+          - consul
+          - agent
+          - -dev
+          - -log-level=warn
+          - -ui
+          - -client=0.0.0.0
+          image: consul:latest
+          imagePullPolicy: ""
+          name: consul
+          ports:
+          - containerPort: 8500
+          resources: {}
+        hostname: consul
+        restartPolicy: Always
+        serviceAccountName: ""
+        volumes: null
+  status: {}
+
 kind: List
 metadata: {}
 

@@ -15,6 +15,7 @@ using UserService.Services;
 using Shared;
 using UserService.DAL;
 using Microsoft.EntityFrameworkCore;
+using Shared.Consul;
 
 namespace UserService
 {
@@ -31,6 +32,8 @@ namespace UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            ConfigureConsul(services);
 
             var key = "Thisismytestprivatekey";
 
@@ -98,6 +101,13 @@ namespace UserService
                         .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<UserContext>();
             context.Database.Migrate();
+        }
+
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            var serviceConfig = Configuration.GetServiceConfig();
+
+            services.RegisterConsulServices(serviceConfig);
         }
     }
 }
