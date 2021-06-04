@@ -59,11 +59,11 @@ items:
     name: authentication
   spec:
     ports:
-    - name: "50010"
-      port: 50010
+    - name: "http"
+      port: 80
       targetPort: 80
-    - name: "50011"
-      port: 50011
+    - name: "https"
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: authentication
@@ -105,11 +105,11 @@ items:
     name: moderationservice
   spec:
     ports:
-    - name: "50040"
-      port: 50040
+    - name: "http"
+      port: 80
       targetPort: 80
-    - name: "50041"
-      port: 50041
+    - name: "https"
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: moderationservice
@@ -191,11 +191,11 @@ items:
     name: recipeservice
   spec:
     ports:
-    - name: "50030"
-      port: 50030
+    - name: "http"
+      port: 80
       targetPort: 80
-    - name: "50031"
-      port: 50031
+    - name: "https"
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: recipeservice
@@ -237,11 +237,11 @@ items:
     name: userservice
   spec:
     ports:
-    - name: "50020"
-      port: 50020
+    - name: "http"
+      port: 80
       targetPort: 80
-    - name: "50021"
-      port: 50021
+    - name: "https"
+      port: 443
       targetPort: 443
     selector:
       io.kompose.service: userservice
