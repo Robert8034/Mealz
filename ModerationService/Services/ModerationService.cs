@@ -26,6 +26,11 @@ namespace ModerationService.Services
             return _moderationDAL.GetReports();
         }
 
+        public List<Report> GetMyReports(Guid id)
+        {
+            return _moderationDAL.GetReportsByReporterId(id);
+        }
+
         public List<Request> GetRequests()
         {
             return _moderationDAL.GetRequests();
@@ -44,6 +49,11 @@ namespace ModerationService.Services
         public async Task DeclineRequest(Request request)
         {
             await _moderationDAL.RemoveRequest(request);
+        }
+
+        public async Task RemoveReport(Report report)
+        {
+            await _moderationDAL.RemoveReport(report);
         }
     }
 }

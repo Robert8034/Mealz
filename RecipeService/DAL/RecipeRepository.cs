@@ -37,5 +37,15 @@ namespace RecipeService.DAL
 
             return recipes.GetRange(lowerIndex, count);
         }
+
+        public Recipe GetRecipeById(Guid recipeId)
+        {
+            return _context.Recipes.Find(e => e.RecipeId == recipeId).FirstOrDefault();
+        }
+
+        public async Task RemoveRecipe(Recipe recipe)
+        {
+            await _context.Recipes.DeleteOneAsync(e => e.RecipeId == recipe.RecipeId);
+        }
     }
 }

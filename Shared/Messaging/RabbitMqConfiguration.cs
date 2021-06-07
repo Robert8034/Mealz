@@ -33,6 +33,8 @@ namespace Shared.Messaging
                 channel.QueueBind("Authentication Service", "mealz", "UserDeleted");
                 channel.QueueBind("Authentication Service", "mealz", "UserRoleUpdated");
 
+                channel.QueueBind("Recipe Service", "mealz", "RemoveRecipe");
+
                 configured = true;
             }
         }

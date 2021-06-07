@@ -41,5 +41,16 @@ namespace RecipeService.Controllers
 
             return Ok(recipes);
         }
+
+        [HttpPost("getRecipe")]
+        public IActionResult GetRecipeById([FromBody] Guid recipeId)
+        {
+            if (recipeId != Guid.Empty)
+            {
+                return Ok(_recipeService.GetRecipeById(recipeId));
+            }
+
+            return BadRequest();
+        }
     }
 }

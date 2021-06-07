@@ -2,6 +2,7 @@
 using RecipeService.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,18 @@ namespace RecipeService.Test.MockServices
             }
 
             return recipes.GetRange(lowerIndex, count);
+        }
+
+        public Recipe GetRecipeById(Guid recipeId)
+        {
+            return recipes.FirstOrDefault(e => e.RecipeId == recipeId);
+        }
+
+        public Task RemoveRecipe(Recipe recipe)
+        {
+            recipes.Remove(recipe);
+
+            return Task.CompletedTask;
         }
 
         public Task Save(Recipe recipe)

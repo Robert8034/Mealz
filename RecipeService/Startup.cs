@@ -21,6 +21,7 @@ using Shared;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Binder;
 using Shared.Consul;
+using RecipeService.MessageHandlers;
 
 namespace RecipeService
 {
@@ -74,7 +75,10 @@ namespace RecipeService
 
             services.AddSharedServices("Recipe Service");
 
-            services.AddMessagePublishing("Recipe Service");
+            services.AddMessagePublishing("Recipe Service", builder =>
+            {
+                builder.WithHandler<RemoveRecipeMessageHandler>("RemoveRecipe");
+            });
 
             services.AddScoped<IRecipeService, Services.RecipeService>();
         }

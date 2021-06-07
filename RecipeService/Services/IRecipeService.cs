@@ -20,5 +20,18 @@ namespace RecipeService.Services
         /// <param name="index"></param>
         /// <returns></returns>
         List<Recipe> GetRecipes(int index);
+
+        /// <summary>
+        /// Gets a recupe by its recipeId
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        Recipe GetRecipeById(Guid recipeId);
+        /// <summary>
+        /// Removes a recipe based on a matching recipeId
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        Task RemoveRecipe(Guid recipeId);
     }
 }

@@ -48,7 +48,7 @@ namespace ModerationService.Controllers
             {
                 await _moderationService.ApproveRequest(request);
 
-                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { UserId = request.UserId, Role = 1 });
+                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { request.UserId, Role = 1 });
 
                 return Ok();
             }
@@ -64,7 +64,7 @@ namespace ModerationService.Controllers
             {
                 await _moderationService.ApproveRequest(request);
 
-                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { UserId = request.UserId, Role = 2 });
+                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { request.UserId, Role = 2 });
 
                 return Ok();
             }
@@ -80,7 +80,7 @@ namespace ModerationService.Controllers
             {
                 await _moderationService.ApproveRequest(request);
 
-                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { UserId = request.UserId, Role = 3 });
+                await _messagePublisher.PublishMessageAsync("UserRoleUpdated", new { request.UserId, Role = 3 });
 
                 return Ok();
             }
@@ -137,6 +137,19 @@ namespace ModerationService.Controllers
             return Ok(_moderationService.GetReports());
         }
 
+
+        [Authorize(Roles = "User,Chef,Moderator,Admin")]
+        [HttpPost("getMyReports")]
+        public IActionResult GetMyReports([FromBody] Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Invalid ID");
+            }
+
+            return Ok(_moderationService.GetMyReports(id));
+        }
+
         [Authorize(Roles = "User,Chef,Moderator,Admin")]
         [HttpPost("postReport")]
         public async Task<IActionResult> PostReport([FromBody] Report report)
@@ -145,6 +158,26 @@ namespace ModerationService.Controllers
             if (report.ReporterId == Guid.Empty) return BadRequest("Invalid User");
             
             await _moderationService.PostReport(report);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpPost("removeReport")]
+        public async Task<IActionResult> RemoveReport([FromBody] Report report)
+        {
+            await _moderationService.RemoveReport(report);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Moderator,Admin")]
+        [HttpPost("removeRecipe")]
+        public async Task<IActionResult> RemoveRecipe([FromBody] Report report)
+        {
+            await _messagePublisher.PublishMessageAsync("RemoveRecipe", report.PostId.ToString());
+
+            await _moderationService.RemoveReport(report);
 
             return Ok();
         }

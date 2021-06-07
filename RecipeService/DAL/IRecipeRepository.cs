@@ -11,5 +11,9 @@ namespace RecipeService.DAL
         Task Save(Recipe recipe);
 
         List<Recipe> GetRange(int lowerIndex, int count);
+
+        Recipe GetRecipeById(Guid recipeId);
+
+        Task RemoveRecipe(Recipe recipe);
     }
 }

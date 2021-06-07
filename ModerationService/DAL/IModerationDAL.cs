@@ -12,7 +12,11 @@ namespace ModerationService.DAL
 
         Task PostRequest(Request request);
 
+        Task RemoveReport(Report report);
+
         List<Report> GetReports();
+
+        List<Report> GetReportsByReporterId(Guid id);
 
         Task PostReport(Report report);
 

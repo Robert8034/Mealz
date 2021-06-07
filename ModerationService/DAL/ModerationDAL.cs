@@ -20,6 +20,11 @@ namespace ModerationService.DAL
             return _moderationContext.Reports.ToList();
         }
 
+        public List<Report> GetReportsByReporterId(Guid id)
+        {
+            return _moderationContext.Reports.Where(e => e.ReporterId == id).ToList();
+        }
+
         public List<Request> GetRequests()
         {
             return _moderationContext.Requests.ToList();
@@ -37,6 +42,13 @@ namespace ModerationService.DAL
            await _moderationContext.Requests.AddAsync(request);
 
            await _moderationContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveReport(Report report)
+        {
+            _moderationContext.Remove(report);
+
+            await _moderationContext.SaveChangesAsync();
         }
 
         public async Task RemoveRequest(Request request)

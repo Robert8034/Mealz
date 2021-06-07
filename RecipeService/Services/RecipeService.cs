@@ -26,5 +26,18 @@ namespace RecipeService.Services
         {
             return _recipeRepository.GetRange(index, 10);
         }
+
+        public Recipe GetRecipeById(Guid recipeId)
+        {
+            return _recipeRepository.GetRecipeById(recipeId);
+        }
+
+        public async Task RemoveRecipe(Guid recipeId)
+        {
+            var recipe = _recipeRepository.GetRecipeById(recipeId);
+
+            await _recipeRepository.RemoveRecipe(recipe);
+        }
+
     }
 }

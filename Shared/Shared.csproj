@@ -7,7 +7,7 @@
     <Product>Mealz</Product>
     <Description>Shared project used in the Mealz solution. Configures RabbitMQ and adds logging and swagger to the application.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
