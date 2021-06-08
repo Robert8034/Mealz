@@ -19,9 +19,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModerationService", "Modera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.Test", "Authentication.Test\Authentication.Test.csproj", "{9C6D89A0-CD21-4B5D-A692-DDC6F4C3B2F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Test", "UserService.Test\UserService.Test.csproj", "{1C2E1E58-87BB-4F28-8861-ECBB620CA4E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Test", "UserService.Test\UserService.Test.csproj", "{1C2E1E58-87BB-4F28-8861-ECBB620CA4E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeService.Test", "RecipeService.Test\RecipeService.Test.csproj", "{DB4EA9C3-61F6-47B9-853F-E5EBBD7F1418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeService.Test", "RecipeService.Test\RecipeService.Test.csproj", "{DB4EA9C3-61F6-47B9-853F-E5EBBD7F1418}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModerationService.Test", "ModerationService.Test\ModerationService.Test.csproj", "{FB26E72B-9958-42AA-A9D0-6B44EAD769D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FB0287A-1BD1-48CA-A324-81956F2EE76A} = {8FB0287A-1BD1-48CA-A324-81956F2EE76A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +74,10 @@ Global
 		{DB4EA9C3-61F6-47B9-853F-E5EBBD7F1418}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB4EA9C3-61F6-47B9-853F-E5EBBD7F1418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB4EA9C3-61F6-47B9-853F-E5EBBD7F1418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB26E72B-9958-42AA-A9D0-6B44EAD769D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB26E72B-9958-42AA-A9D0-6B44EAD769D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB26E72B-9958-42AA-A9D0-6B44EAD769D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB26E72B-9958-42AA-A9D0-6B44EAD769D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
