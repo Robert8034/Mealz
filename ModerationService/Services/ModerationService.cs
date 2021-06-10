@@ -21,19 +21,19 @@ namespace ModerationService.Services
             await _moderationDAL.RemoveRequest(request);
         }
 
-        public List<Report> GetReports()
+        public async Task<List<Report>> GetReports()
         {
-            return _moderationDAL.GetReports();
+            return await _moderationDAL.GetReports();
         }
 
-        public List<Report> GetMyReports(Guid id)
+        public async Task<List<Report>> GetMyReports(Guid id)
         {
-            return _moderationDAL.GetReportsByReporterId(id);
+            return await _moderationDAL.GetReportsByReporterId(id);
         }
 
-        public List<Request> GetRequests()
+        public async Task<List<Request>> GetRequests()
         {
-            return _moderationDAL.GetRequests();
+            return await _moderationDAL.GetRequests();
         }
 
         public async Task PostReport(Report report)

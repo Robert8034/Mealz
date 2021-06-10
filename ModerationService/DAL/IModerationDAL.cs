@@ -8,15 +8,15 @@ namespace ModerationService.DAL
 {
     public interface IModerationDAL
     {
-        List<Request> GetRequests();
+        Task<List<Request>> GetRequests();
 
         Task PostRequest(Request request);
 
         Task RemoveReport(Report report);
 
-        List<Report> GetReports();
+        Task<List<Report>> GetReports();
 
-        List<Report> GetReportsByReporterId(Guid id);
+        Task<List<Report>> GetReportsByReporterId(Guid id);
 
         Task PostReport(Report report);
 

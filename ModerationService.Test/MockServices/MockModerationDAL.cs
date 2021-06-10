@@ -18,19 +18,19 @@ namespace ModerationService.Test.MockServices
             requests = new List<Request>();
         }
 
-        public List<Report> GetReports()
+        public Task<List<Report>> GetReports()
         {
-            return reports;
+            return Task.FromResult(reports);
         }
 
-        public List<Report> GetReportsByReporterId(Guid id)
+        public Task<List<Report>> GetReportsByReporterId(Guid id)
         {
-            return reports.FindAll(e => e.ReporterId == id);
+            return Task.FromResult(reports.FindAll(e => e.ReporterId == id));
         }
 
-        public List<Request> GetRequests()
+        public Task<List<Request>> GetRequests()
         {
-            return requests;
+            return Task.FromResult(requests);
         }
 
         public Task PostReport(Report report)

@@ -8,10 +8,10 @@ namespace ModerationService.Services
 {
     public interface IModerationService
     {
-        List<Request> GetRequests();
+        Task<List<Request>> GetRequests();
         Task PostRequest(Request request);
-        List<Report> GetReports();
-        List<Report> GetMyReports(Guid id);
+        Task<List<Report>> GetReports();
+        Task<List<Report>> GetMyReports(Guid id);
         Task PostReport(Report report);
         Task ApproveRequest(Request request);
         Task DeclineRequest(Request request);

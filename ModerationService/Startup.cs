@@ -68,6 +68,8 @@ namespace ModerationService
 
             services.AddMessagePublishing("Moderation Service");
 
+            services.AddSingleton<IModerationCache, ModerationCache>();
+
             services.AddScoped<IModerationDAL, ModerationDAL>();
 
             services.AddScoped<IModerationService, Services.ModerationService>();

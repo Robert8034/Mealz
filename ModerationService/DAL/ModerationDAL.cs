@@ -1,4 +1,5 @@
-﻿using ModerationService.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ModerationService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,52 +11,163 @@ namespace ModerationService.DAL
     {
         private readonly ModerationContext _moderationContext;
 
-        public ModerationDAL(ModerationContext moderationContext)
+        private readonly IModerationCache _moderationCache;
+
+        public ModerationDAL(ModerationContext moderationContext, IModerationCache moderationCache)
         {
             _moderationContext = moderationContext;
+
+            _moderationCache = moderationCache;
         }
 
-        public List<Report> GetReports()
+        public async Task<List<Report>> GetReports()
         {
-            return _moderationContext.Reports.ToList();
+            
+            if (_moderationContext.Database.CanConnect())
+            {
+                await SyncReportData();
+
+                return _moderationContext.Reports.ToList();
+            }
+          
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            return _moderationCache.GetCachedReports();
         }
 
-        public List<Report> GetReportsByReporterId(Guid id)
+        public async Task<List<Report>> GetReportsByReporterId(Guid id)
         {
-            return _moderationContext.Reports.Where(e => e.ReporterId == id).ToList();
+            if (_moderationContext.Database.CanConnect())
+            {
+                await SyncReportData();
+
+                return _moderationContext.Reports.Where(e => e.ReporterId == id).ToList();
+            }
+
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            return _moderationCache.GetCachedReports().Where(e => e.ReporterId == id).ToList();
         }
 
-        public List<Request> GetRequests()
+        public async Task<List<Request>> GetRequests()
         {
-            return _moderationContext.Requests.ToList();
+            if (_moderationContext.Database.CanConnect())
+            {
+                await SyncRequestData();
+
+                return _moderationContext.Requests.ToList();
+            }
+        
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            return _moderationCache.GetCachedRequests();
         }
 
         public async Task PostReport(Report report)
         {
-            await _moderationContext.Reports.AddAsync(report);
+            if (_moderationContext.Database.CanConnect())
+            {
+                if (_moderationCache.CheckIfDatabaseIsOffline()) await SyncReportData();
 
-            await _moderationContext.SaveChangesAsync();
+                await _moderationContext.Reports.AddAsync(report);
+
+                await _moderationContext.SaveChangesAsync();
+
+                await SyncReportData();
+            }
+
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            _moderationCache.GetCachedReports().Add(report);
         }
 
         public async Task PostRequest(Request request)
         {
-           await _moderationContext.Requests.AddAsync(request);
+            if (_moderationContext.Database.CanConnect())
+            {
+                if (_moderationCache.CheckIfDatabaseIsOffline()) await SyncRequestData();
 
-           await _moderationContext.SaveChangesAsync();
+                await _moderationContext.Requests.AddAsync(request);
+
+                await _moderationContext.SaveChangesAsync();
+
+                await SyncRequestData();
+            }
+
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            _moderationCache.GetCachedRequests().Add(request);
         }
 
         public async Task RemoveReport(Report report)
         {
-            _moderationContext.Remove(report);
+            if (_moderationContext.Database.CanConnect())
+            {
+                _moderationContext.Reports.Remove(report);
 
-            await _moderationContext.SaveChangesAsync();
+                await _moderationContext.SaveChangesAsync();
+
+                await SyncReportData();
+            }
+
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            var cachedReports = _moderationCache.GetCachedReports();
+
+            var target = cachedReports.FirstOrDefault(e => e.ReportId == report.ReportId);
+            cachedReports.Remove(target);
+
+            _moderationCache.SetCachedReports(cachedReports);
         }
 
         public async Task RemoveRequest(Request request)
         {
-            _moderationContext.Remove(request);
-        
-           await _moderationContext.SaveChangesAsync();
+            if (_moderationContext.Database.CanConnect())
+            {
+                _moderationContext.Requests.Remove(request);
+
+                await _moderationContext.SaveChangesAsync();
+
+                await SyncRequestData();
+            }
+
+            if (!_moderationCache.CheckIfDatabaseIsOffline()) _moderationCache.SetDatabaseOffline(true);
+
+            var cachedRequests = _moderationCache.GetCachedRequests();
+
+            cachedRequests.Remove(request);
+
+            _moderationCache.SetCachedRequests(cachedRequests);
+        }
+
+        private async Task SyncReportData()
+        {
+            if (_moderationCache.CheckIfDatabaseIsOffline())
+            {
+                _moderationContext.UpdateRange(_moderationCache.GetCachedReports());
+                await _moderationContext.SaveChangesAsync();
+                _moderationCache.SetDatabaseOffline(false);
+            }
+            else
+            {
+                var databaseReports = _moderationContext.Reports.ToList();
+
+                _moderationCache.SetCachedReports(databaseReports);
+            }
+        }
+
+        private async Task SyncRequestData()
+        {
+            if (_moderationCache.CheckIfDatabaseIsOffline())
+            {
+                _moderationContext.UpdateRange(_moderationCache.GetCachedRequests());
+                await _moderationContext.SaveChangesAsync();
+                _moderationCache.SetDatabaseOffline(false);
+            }
+            else
+            {
+                _moderationCache.SetCachedRequests(_moderationContext.Requests.ToList());
+            }
         }
     }
 }

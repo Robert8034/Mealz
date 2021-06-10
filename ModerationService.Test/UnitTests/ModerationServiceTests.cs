@@ -47,7 +47,7 @@ namespace ModerationService.Test.UnitTests
             var result = moderationService.GetRequests();
 
             //Assert
-            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(result.Result.Count, 1);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace ModerationService.Test.UnitTests
             var result = moderationService.GetReports();
 
             //Assert
-            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(result.Result.Count, 1);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace ModerationService.Test.UnitTests
             var result = moderationService.GetMyReports(guid);
 
             //Assert
-            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(result.Result.Count, 1);
         }
 
         [Test]

@@ -26,9 +26,9 @@ namespace ModerationService.Controllers
 
         [Authorize(Roles = "Moderator,Admin")]
         [HttpGet("getRequests")]
-        public IActionResult GetRequests()
+        public async Task<IActionResult> GetRequests()
         {
-            return Ok(_moderationService.GetRequests());
+            return Ok(await _moderationService.GetRequests());
         }
 
         [Authorize(Roles = "User,Chef,Moderator,Admin")]
@@ -132,22 +132,22 @@ namespace ModerationService.Controllers
 
         [Authorize(Roles = "Moderator,Admin")]
         [HttpGet("getReports")]
-        public IActionResult GetReports()
+        public async Task<IActionResult> GetReports()
         {
-            return Ok(_moderationService.GetReports());
+            return Ok(await _moderationService.GetReports());
         }
 
 
         [Authorize(Roles = "User,Chef,Moderator,Admin")]
         [HttpPost("getMyReports")]
-        public IActionResult GetMyReports([FromBody] Guid id)
+        public async Task<IActionResult> GetMyReports([FromBody] Guid id)
         {
             if (id == Guid.Empty)
             {
                 return BadRequest("Invalid ID");
             }
 
-            return Ok(_moderationService.GetMyReports(id));
+            return Ok(await _moderationService.GetMyReports(id));
         }
 
         [Authorize(Roles = "User,Chef,Moderator,Admin")]
