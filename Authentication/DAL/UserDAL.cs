@@ -16,7 +16,7 @@ namespace Authentication.DAL
 
         public async Task AddUser(User user)
         {
-            _userContext.Users.Add(user);
+            _userContext.Add(user);
             await _userContext.SaveChangesAsync();
         }
 
