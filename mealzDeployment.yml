@@ -634,7 +634,10 @@ items:
           ports:
           - containerPort: 80
           - containerPort: 443
-          resources: {}
+          resources: 
+            requests:
+              cpu: 250m
+            limits: 500m
           stdin: true
           tty: true
         restartPolicy: Always
