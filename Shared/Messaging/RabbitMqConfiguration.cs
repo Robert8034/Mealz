@@ -32,6 +32,7 @@ namespace Shared.Messaging
                 channel.QueueBind("Authentication Service", "mealz", "UserChanged");
                 channel.QueueBind("Authentication Service", "mealz", "UserDeleted");
                 channel.QueueBind("Authentication Service", "mealz", "UserRoleUpdated");
+                channel.QueueBind("Authentication Service", "mealz", "AdminAdded");
 
                 channel.QueueBind("Recipe Service", "mealz", "RemoveRecipe");
 

@@ -18,6 +18,7 @@ namespace UserService.Services
             _userDAL = userDAL;
             _messagePublisher = messagePublisher;
         }
+
         public bool CheckCredentials(string email, string emailConfirm, string password, string passwordConfirm)
         {
             if ((email == emailConfirm) && (password == passwordConfirm) && (_userDAL.GetUserByEmail(email) == null)) return true;
@@ -87,6 +88,11 @@ namespace UserService.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task ConfigureAdmin(Guid id)
+        {  
+           await _messagePublisher.PublishMessageAsync("AdminAdded", new { id }); 
         }
     }
 }

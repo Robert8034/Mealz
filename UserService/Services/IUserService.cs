@@ -48,5 +48,11 @@ namespace UserService.Services
         /// <param name="user"></param>
         /// <returns></returns>
         Task<bool> DeleteUser(User user);
+
+        /// <summary>
+        /// Adds an Admin account if none exists, otherwise does nothing.
+        /// </summary>
+        /// <returns></returns>
+        Task ConfigureAdmin(Guid id);
     }
 }

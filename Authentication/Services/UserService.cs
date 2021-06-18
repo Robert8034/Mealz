@@ -80,5 +80,16 @@ namespace Authentication.Services
                 _userDAL.DeleteUser(user);
             }
         }
+
+        public async Task ConfigureAdmin(Guid userId)
+        {
+            var salt = _cryptographyService.GenerateSalt();
+
+            var hashedPassword = _cryptographyService.HashPassword("Admin123", salt);
+
+            var stringSalt = Convert.ToBase64String(salt);
+
+            await _userDAL.AddUser(new User { UserId = userId, Email = "Admin@Admin.com", Password = hashedPassword, Salt = stringSalt, Role = Roles.Admin });
+        }
     }
 }

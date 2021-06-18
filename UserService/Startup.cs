@@ -94,13 +94,38 @@ namespace UserService
                 endpoints.MapControllers();
             });
         }
+
         private static void UpdateDatabase(IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices
                         .GetRequiredService<IServiceScopeFactory>()
                         .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<UserContext>();
+
             context.Database.Migrate();
+
+            if (context.Users.FirstOrDefault(e => e.Email == "Admin@Admin.com") == null)
+            {
+                var id = Guid.NewGuid();
+
+                context.Users.Add(new Models.User
+                {
+                    UserId = id,
+                    DisplayName = "Admin",
+                    Biography = "Biography",
+                    Email = "Admin@Admin.com"
+                });
+
+                context.SaveChanges();
+
+                using var serviceScope2 = app.ApplicationServices
+                       .GetRequiredService<IServiceScopeFactory>()
+                       .CreateScope();
+
+                var userService = serviceScope2.ServiceProvider.GetService<IUserService>();
+
+                userService.ConfigureAdmin(id);
+            }
         }
 
         private void ConfigureConsul(IServiceCollection services)

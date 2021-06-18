@@ -74,6 +74,7 @@ namespace Authentication
                 builder.WithHandler<UserChangedMessageHandler>("UserChanged");
                 builder.WithHandler<UserDeletedMessageHandler>("UserDeleted");
                 builder.WithHandler<UserRoleUpdatedMessageHandler>("UserRoleUpdated");
+                builder.WithHandler<AdminAddedMessageHandler>("AdminAdded");
             });
         }
 

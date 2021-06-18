@@ -45,5 +45,12 @@ namespace Authentication.Services
         /// </summary>
         /// <param name="userId"></param>
         void DeleteUser(Guid userId);
+
+        /// <summary>
+        /// Configures the admin account role and adds it to the authentication database.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task ConfigureAdmin(Guid userId);
     }
 }
