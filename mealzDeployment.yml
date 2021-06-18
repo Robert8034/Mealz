@@ -637,7 +637,8 @@ items:
           resources: 
             requests:
               cpu: 250m
-            limits: 500m
+            limits: 
+              cpu: 500m
           stdin: true
           tty: true
         restartPolicy: Always
